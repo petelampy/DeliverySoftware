@@ -44,13 +44,19 @@
                             else if(_CurrentUser.UserType == UserType.Employee)
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-page="/Fleet/FleetManagement">Fleet Management</a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-page="/Delivery/PackageManagement">Packages</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-page="/Delivery/DeliveryManagement">Deliveries</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Fleet/FleetManagement">Fleet Management</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Customer/CustomerManagement">Customer Management</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Driver/DriverManagement">Driver Management</a>
                                 </li>
                             }
                             else if(_CurrentUser.UserType == UserType.Driver)
