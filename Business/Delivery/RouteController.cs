@@ -1,6 +1,6 @@
 ﻿namespace DeliverySoftware.Business.Delivery
 {
-    public class RouteController
+    public class RouteController : IRouteController
     {
     }
 }

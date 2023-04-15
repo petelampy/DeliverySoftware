@@ -4,6 +4,7 @@ using DeliverySoftware.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DeliverySoftware.Migrations
 {
     [DbContext(typeof(DeliveryDBContext))]
-    partial class DeliveryDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230415192914_AdditionalFieldsAndSampleData")]
+    partial class AdditionalFieldsAndSampleData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -223,59 +226,47 @@ namespace DeliverySoftware.Migrations
                             Id = "751e25c8-68ba-49dc-b1de-15fcb0bf210f",
                             AccessFailedCount = 0,
                             Address = "306 Sinfin Avenue, Derby, UK",
-                            ConcurrencyStamp = "3fe53337-68fc-4ebf-9c2a-70b3e5e84d34",
+                            ConcurrencyStamp = "25c870cd-a7a3-4f9f-8173-1e5bfffd4ec6",
                             Email = "petelampy@gmail.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = false,
                             Forename = "Annika",
                             HouseNumber = 306,
                             LockoutEnabled = false,
-                            NormalizedEmail = "PETELAMPY@GMAIL.COM",
-                            NormalizedUserName = "CUSTOMERLOGON",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGkC1RW3x6M4loVLP5X7504Sr4DhUV3lJ6YCS6KQVFm3uPzI6rQFrGSnncEGp+j8CQ==",
                             PhoneNumberConfirmed = false,
                             PostCode = "DE24 9QX",
-                            SecurityStamp = "06f19558-fe00-48e1-bfa3-61655bd9ff5a",
+                            SecurityStamp = "ffbca79f-52b4-4c06-9436-7b9b04cd459f",
                             Surname = "Hansen",
                             TwoFactorEnabled = false,
-                            UserName = "customerlogon",
                             UserType = 1
                         },
                         new
                         {
                             Id = "16776aef-a5ff-424d-be7e-ea3fd591ce90",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f8130406-5e90-459b-b4d2-564e2baf29ab",
+                            ConcurrencyStamp = "38c1da5e-a21e-446b-8b1e-ecf30cbc6619",
                             Email = "petelampy@gmail.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = false,
                             Forename = "Din",
                             LockoutEnabled = false,
-                            NormalizedEmail = "PETELAMPY@GMAIL.COM",
-                            NormalizedUserName = "DRIVERLOGON",
-                            PasswordHash = "AQAAAAIAAYagAAAAEISrd1O2BFKeF8/h+LRnYQhMAmBI+Vm6TtA0sHaScwdpPLSdakCE037ngA35TKs0qQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "59672046-6d5c-42bd-b99f-962b248d662e",
+                            SecurityStamp = "5275e674-79ae-416f-b409-7f49aaed3ecc",
                             Surname = "Djarin",
                             TwoFactorEnabled = false,
-                            UserName = "driverlogon",
                             UserType = 2
                         },
                         new
                         {
                             Id = "ca6f5584-527f-4820-802f-bd329352c3e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "af702541-4939-4bb7-9895-e246c0ec292f",
+                            ConcurrencyStamp = "f5405056-fd56-46c4-a847-609f52cde9ea",
                             Email = "petelampy@gmail.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = false,
                             Forename = "William",
                             LockoutEnabled = false,
-                            NormalizedEmail = "PETELAMPY@GMAIL.COM",
-                            NormalizedUserName = "EMPLOYEELOGON",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMHaH1GpZL+Yvzax1VDnJkj5QnUIBBFSLEQaMHputEYiafWop6f0T4RQALyxIri+uQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7bb79ccf-8cf0-46c0-9fa1-31074f58482f",
+                            SecurityStamp = "6377b8da-38a6-4839-98f5-c89b623d5dfc",
                             Surname = "Riker",
                             TwoFactorEnabled = false,
-                            UserName = "employeelogon",
                             UserType = 3
                         });
                 });
