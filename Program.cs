@@ -16,6 +16,8 @@ _Builder.Services
     .AddEntityFrameworkStores<DeliveryDBContext>()
     .AddDefaultTokenProviders();
 
+_Builder.Services.AddTransient<UserController>();
+
 var _App = _Builder.Build();
 
 // Configure the HTTP request pipeline.

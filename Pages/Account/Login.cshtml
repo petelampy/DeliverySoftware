@@ -1,0 +1,35 @@
+﻿@page
+@model DeliverySoftware.Pages.Account.LoginModel
+@{
+}
+
+
+<form method="post" asp-page-handler="Login" novalidate>
+    <div>
+        <div class="row">
+            <div class="form-group form-floating">
+                <input class="form-control" name="username">
+                <label class="ps-4">Username</label>
+                <span class="text-danger">@Html.ValidationMessage("username")</span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="form-group form-floating">
+                <input class="form-control" name="password" type="password">
+                <label class="ps-4">Password</label>
+                <span class="text-danger">@Html.ValidationMessage("password")</span>
+            </div>
+        </div>
+        <div class="row checkbox mb-2">
+            <div class="form-group col-11 m-auto">
+                <input type="checkbox" class="form-check-input" name="rememberMe" value="true"> Remember me
+            </div>
+        </div>
+        <div class="row">
+            <span class="text-danger">@Html.ValidationMessage("LoginError")</span>
+            <div class="form-group m-auto">
+                <input class="w-100 btn btn-lg btn-primary" type="submit" value="Login">
+            </div> 
+        </div>
+    </div>
+</form>

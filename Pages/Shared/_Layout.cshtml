@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using DeliverySoftware.Business.Users;
+@using Microsoft.AspNetCore.Identity;
+@using System.Security.Claims;
+@inject SignInManager<DeliveryUser> SignInManager
+@inject UserManager<DeliveryUser> UserManager
+@inject UserController UserController
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -19,12 +26,62 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            string _UserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                            DeliveryUser _CurrentUser = UserController.Get(new Guid(_UserID));
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            </li>
+
+                            if(_CurrentUser.UserType == UserType.Customer)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Customer/OrderTracking">Track My Order</a>
+                                </li>
+                            }
+                            else if(_CurrentUser.UserType == UserType.Employee)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Fleet/FleetManagement">Fleet Management</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Delivery/PackageManagement">Packages</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Delivery/DeliveryManagement">Deliveries</a>
+                                </li>
+                            }
+                            else if(_CurrentUser.UserType == UserType.Driver)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Driver/DeliveryRuns">Available Runs</a>
+                                </li>
+                            }
+                        }
+                        
+                    </ul>
+                    <ul class="navbar-nav flex-grow-2 ml-auto">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            string _UserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                            DeliveryUser _CurrentUser = UserController.Get(new Guid(_UserID));
+                            string FullName = _CurrentUser.Forename + " " + _CurrentUser.Surname;
+
+                            <li class="nav-item">
+                                <p class="nav-link text-dark">Welcome @FullName!</p>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login" asp-page-handler="Logout">Logout</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link active" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
