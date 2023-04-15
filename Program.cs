@@ -1,4 +1,6 @@
+using DeliverySoftware.Business.Users;
 using DeliverySoftware.Database;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var _Builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,10 @@ _Builder.Services.AddRazorPages();
 
 _Builder.Services.AddDbContext<DeliveryDBContext>(options => options.UseSqlServer(_Builder.Configuration.GetConnectionString("Default")));
 
+_Builder.Services
+    .AddIdentity<DeliveryUser, IdentityRole>()
+    .AddEntityFrameworkStores<DeliveryDBContext>()
+    .AddDefaultTokenProviders();
 
 var _App = _Builder.Build();
 
