@@ -38,5 +38,23 @@ namespace DeliverySoftware.Business.Delivery
                 .Where(package => !package.IsDelivered)
                 .ToList();
         }
+
+        public Package GetByTrackingCode(string trackingCode)
+        {
+            return __DbContext
+                .Packages
+                .AsEnumerable()
+                .Where(package => package.TrackingCode == trackingCode)
+                .SingleOrDefault(new Package());
+        }
+
+        public bool DoesTrackingCodeExist(string trackingCode)
+        {
+             return __DbContext
+                .Packages
+                .AsEnumerable()
+                .Where(package => package.TrackingCode == trackingCode)
+                .Count() > 0;
+        }
     }
 }

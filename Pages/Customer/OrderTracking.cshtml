@@ -1,4 +1,21 @@
 ﻿@page
+@using DeliverySoftware.Business.Delivery;
 @model DeliverySoftware.Pages.Customer.OrderTrackingModel
 @{
 }
+
+
+<div>
+    <p>Tracking Code: @Model.TrackingCode</p>
+    <p>Customer Name: @Model.Customer.Forename @Model.Customer.Surname</p>
+</div>
+
+<div>
+    <p>Package Status: @(Model.DeliveryRun.Status == DeliveryStatus.Completed ? "Delivered" : "On the way")</p>
+    <p>Your Package is: @(Model.Package.DropNumber - Model.DeliveryRun.CurrentDrop) drops away</p>
+</div>
+
+<div>
+    <p>Delivery Address: @Model.Customer.Address</p>
+    <p>Delivery PostCode: @Model.Customer.PostCode</p>
+</div>

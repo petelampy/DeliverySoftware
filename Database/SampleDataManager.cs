@@ -22,23 +22,41 @@ namespace DeliverySoftware.Database
                 UID = __SampleDeliveryUID,
                 NumberOfPackages = 1,
                 VanUID = __SampleVanUID,
-                Status = DeliveryStatus.Pending
+                Status = DeliveryStatus.Pending,
+                CurrentDrop = 1
             };
         }
 
-        public static Package GeneratePackage ()
+        public static List<Package> GeneratePackage ()
         {
-            return new Package
+            return new List<Package>
             {
-                Id = 1,
-                CustomerUID = __SampleCustomerUID,
-                DeliveryUID = __SampleDeliveryUID,
-                IsAssignedToDelivery = true,
-                Description = "Big box of bolts",
-                Size = 10,
-                UID = __SamplePackageUID,
-                DropNumber = 1,
-                IsDelivered = false
+                new Package
+                {
+                    Id = 1,
+                    CustomerUID = __SampleCustomerUID,
+                    DeliveryUID = __SampleDeliveryUID,
+                    IsAssignedToDelivery = true,
+                    Description = "Big box of rocks",
+                    Size = 10,
+                    UID = Guid.NewGuid(),
+                    DropNumber = 1,
+                    IsDelivered = false,
+                    TrackingCode = "TESTPKG666"
+                },
+                new Package
+                {
+                    Id = 2,
+                    CustomerUID = __SampleCustomerUID,
+                    DeliveryUID = __SampleDeliveryUID,
+                    IsAssignedToDelivery = true,
+                    Description = "Big box of bolts",
+                    Size = 10,
+                    UID = __SamplePackageUID,
+                    DropNumber = 2,
+                    IsDelivered = false,
+                    TrackingCode = "TESTPKG123"
+                }
             };
         }
 

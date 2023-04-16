@@ -10,6 +10,7 @@
         public bool IsAssignedToDelivery { get; set; }
         public bool IsDelivered { get; set; }
         public int Size { get; set; }
+        public string TrackingCode { get; set; }
         public Guid UID { get; set; }
     }
 }

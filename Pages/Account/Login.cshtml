@@ -3,6 +3,20 @@
 @{
 }
 
+<div>
+    <form method="post" asp-page-handler="LoginWithCode" novalidate>
+        <div class="row">
+            <div class="form-group form-floating">
+                <input class="form-control" name="trackingCode">
+                <label class="ps-4">Enter tracking code:</label>
+                <span class="text-danger">@Html.ValidationMessage("trackingcode")</span>
+        </div>
+        </div>
+        <div class="form-group m-auto">
+            <input class="w-100 btn btn-lg btn-primary" type="submit" value="Track Order">
+        </div>
+    </form>
+</div>
 
 <form method="post" asp-page-handler="Login" novalidate>
     <div>
