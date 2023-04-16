@@ -1,4 +1,5 @@
 ﻿using DeliverySoftware.Business.Delivery;
+using DeliverySoftware.Business.Users;
 using DeliverySoftware.Database;
 
 namespace DeliverySoftware.Business.Fleet
@@ -45,6 +46,25 @@ namespace DeliverySoftware.Business.Fleet
                 .Where(van => van.UID == uid)
                 .SingleOrDefault(new Van())
                 .Registration;
+        }
+
+        public void Create (Van newVan)
+        {
+            newVan.UID = Guid.NewGuid();
+
+            __DbContext.Vans.Add(newVan);
+            __DbContext.SaveChanges();
+        }
+
+        public void Update (Van updatedVan)
+        {
+            Van _CurrentVan = Get(updatedVan.UID);
+
+            _CurrentVan.Capacity = updatedVan.Capacity;
+            _CurrentVan.DriverUID = updatedVan.DriverUID;
+            _CurrentVan.Registration = updatedVan.Registration;
+
+            __DbContext.SaveChanges();
         }
     }
 }

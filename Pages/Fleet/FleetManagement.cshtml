@@ -38,6 +38,7 @@
                             <td>@Van.Registration</td>
                             <td>@Model.GetDriverName(Van.DriverUID.Value)</td>
                             <td>@Model.GetActiveDeliveries(Van.UID)</td>
+                            <td><a class="btn btn-secondary" role="button" asp-page="CreateEditVan" asp-route-UID="@Van.UID"></a></td>
                         </tr>
                     }
                 </tbody>
@@ -45,3 +46,5 @@
         }
     </div>
 </div>
+
+<a class="btn btn-primary btn-lg" role="button" asp-page="CreateEditVan">Create Van</a>
