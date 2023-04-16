@@ -38,5 +38,14 @@ namespace DeliverySoftware.Business.Delivery
                 .Where(delivery => delivery.Status != DeliveryStatus.Completed)
                 .ToList();
         }
+
+        public int GetCountByVan(Guid van_uid)
+        {
+            return __DbContext
+                .Deliveries
+                .AsEnumerable()
+                .Where(delivery => delivery.VanUID == van_uid)
+                .Count();
+        }
     }
 }

@@ -7,5 +7,6 @@
         List<DeliveryUser> GetAllCustomers ();
         List<DeliveryUser> GetAllDrivers ();
         List<DeliveryUser> GetAllEmployees ();
+        string GetName (Guid uid);
     }
 }

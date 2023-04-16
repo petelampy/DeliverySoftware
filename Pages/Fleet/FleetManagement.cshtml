@@ -1,4 +1,47 @@
 ﻿@page
+@using DeliverySoftware.Business.Fleet;
 @model DeliverySoftware.Pages.Fleet.FleetManagementModel
 @{
 }
+
+
+<div>
+    <div class="row justify-content-center">
+        @if (Model.Vans.Count < 1)
+        {
+            <h2 class="text-center display-6">No vehicles in fleet</h2>
+        }
+        else
+        {
+            <table class="mb-3">
+                <thead>
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            Registration
+                        </th>
+                        <th>
+                            Assigned Driver
+                        </th>
+                        <th>
+                            Number of Active Deliveries
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Van Van in Model.Vans)
+                    {
+                        <tr>
+                            <td>@Van.Id</td>
+                            <td>@Van.Registration</td>
+                            <td>@Model.GetDriverName(Van.DriverUID.Value)</td>
+                            <td>@Model.GetActiveDeliveries(Van.UID)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
