@@ -1,4 +1,46 @@
 ﻿@page
+@using DeliverySoftware.Business.Users;
 @model DeliverySoftware.Pages.Customer.CustomerManagementModel
 @{
 }
+
+<div>
+    <div class="row justify-content-center">
+        @if (Model.Customers.Count < 1)
+        {
+            <h2 class="text-center display-6">No customers setup</h2>
+        }
+        else
+        {
+            <table class="mb-3">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Address
+                        </th>
+                        <th>
+                            PostCode
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DeliveryUser Customer in Model.Customers)
+                    {
+                        <tr>
+                            <td>@Customer.Forename  @Customer.Surname</td>
+                            <td>@Customer.Email</td>
+                            <td>@Customer.Address</td>
+                            <td>@Customer.PostCode</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
