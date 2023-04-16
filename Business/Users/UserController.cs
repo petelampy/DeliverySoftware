@@ -29,5 +29,26 @@ namespace DeliverySoftware.Business.Users
         {
             return __DbContext.Users.ToList();
         }
+
+        public List<DeliveryUser> GetAllDrivers ()
+        {
+            return GetAll()
+                .Where(user => user.UserType == UserType.Driver)
+                .ToList();
+        }
+
+        public List<DeliveryUser> GetAllCustomers ()
+        {
+            return GetAll()
+                .Where(user => user.UserType == UserType.Customer)
+                .ToList();
+        }
+
+        public List<DeliveryUser> GetAllEmployees ()
+        {
+            return GetAll()
+                .Where(user => user.UserType == UserType.Employee)
+                .ToList();
+        }
     }
 }

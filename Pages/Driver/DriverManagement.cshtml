@@ -1,4 +1,41 @@
 ﻿@page
+@using DeliverySoftware.Business.Users;
 @model DeliverySoftware.Pages.Driver.DriverManagementModel
 @{
 }
+
+<div>
+    <div class="row justify-content-center">
+        @if (Model.Drivers.Count < 1)
+        {
+            <h2 class="text-center display-6">No drivers setup</h2>
+        }
+        else {
+            <table class="mb-3">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Number of Vans Assigned
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DeliveryUser Driver in Model.Drivers)
+                    {
+                        <tr>
+                            <td>@Driver.Forename  @Driver.Surname</td>
+                            <td>@Driver.Email</td>
+                            <td>@Model.GetDriverVanCount(new Guid(Driver.Id))</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            }
+    </div>
+</div>

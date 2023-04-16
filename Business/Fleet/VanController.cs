@@ -30,5 +30,12 @@ namespace DeliverySoftware.Business.Fleet
         {
             return __DbContext.Vans.ToList();
         }
+
+        public int GetCountByDriver(Guid driver_uid)
+        {
+            return __DbContext.Vans
+                .Where(van => van.DriverUID == driver_uid)
+                .Count();
+        }
     }
 }
