@@ -36,6 +36,7 @@
                             <td>@Delivery.NumberOfPackages</td>
                             <td>@Delivery.Status</td>
                             <td>@Model.GetVanRegistration(Delivery.VanUID)</td>
+                            <td><a class="btn btn-secondary" role="button" asp-page="CreateEditDelivery" asp-route-UID="@Delivery.UID"></a></td>
                         </tr>
                     }
                 </tbody>
@@ -43,3 +44,5 @@
         }
     </div>
 </div>
+
+<a class="btn btn-primary btn-lg" role="button" asp-page="CreateEditDelivery">Create Delivery Run</a>

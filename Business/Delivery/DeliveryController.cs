@@ -1,4 +1,5 @@
-﻿using DeliverySoftware.Database;
+﻿using DeliverySoftware.Business.Fleet;
+using DeliverySoftware.Database;
 
 namespace DeliverySoftware.Business.Delivery
 {
@@ -46,6 +47,29 @@ namespace DeliverySoftware.Business.Delivery
                 .AsEnumerable()
                 .Where(delivery => delivery.VanUID == van_uid)
                 .Count();
+        }
+
+        public void Create (Delivery newDelivery)
+        {
+            newDelivery.UID = Guid.NewGuid();
+            newDelivery.CurrentDrop = 0;
+            newDelivery.Status = DeliveryStatus.Pending;
+            newDelivery.NumberOfPackages = 0;
+
+            __DbContext.Deliveries.Add(newDelivery);
+            __DbContext.SaveChanges();
+        }
+
+        public void Update (Delivery updatedDelivery)
+        {
+            Delivery _CurrentDelivery = Get(updatedDelivery.UID);
+
+            _CurrentDelivery.NumberOfPackages = updatedDelivery.NumberOfPackages;
+            _CurrentDelivery.Status = updatedDelivery.Status;
+            _CurrentDelivery.CurrentDrop = updatedDelivery.CurrentDrop;
+            _CurrentDelivery.VanUID = updatedDelivery.VanUID;
+
+            __DbContext.SaveChanges();
         }
     }
 }
