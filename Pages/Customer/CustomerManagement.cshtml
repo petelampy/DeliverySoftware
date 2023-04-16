@@ -37,6 +37,7 @@
                             <td>@Customer.Email</td>
                             <td>@Customer.Address</td>
                             <td>@Customer.PostCode</td>
+                            <td><a class="btn btn-secondary" role="button" asp-page="../User/CreateEditUser" asp-route-UID="@(new Guid(@Customer.Id))"></a></td>
                         </tr>
                     }
                 </tbody>
@@ -44,3 +45,5 @@
         }
     </div>
 </div>
+
+<a class="btn btn-primary btn-lg" role="button" asp-page="../User/CreateEditUser" asp-route-UserTypeToCreateOrEdit="@UserType.Customer">Create Customer</a>
