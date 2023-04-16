@@ -1,4 +1,50 @@
 ﻿@page
+@using DeliverySoftware.Business.Delivery;
 @model DeliverySoftware.Pages.Delivery.PackageManagementModel
 @{
 }
+
+<div>
+    <div class="row justify-content-center">
+        @if (Model.Packages.Count < 1)
+        {
+            <h2 class="text-center display-6">No undelivered packages</h2>
+        }
+        else
+        {
+            <table class="mb-3">
+                <thead>
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Assigned to a delivery?
+                        </th>
+                        <th>
+                            Customer Ordered
+                        </th>
+                        <th>
+                            Package Size
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Package Package in Model.Packages)
+                    {
+                        <tr>
+                            <td>@Package.Id</td>
+                            <td>@Package.Description</td>
+                            <td>@Package.IsAssignedToDelivery</td>
+                            <td>@Model.GetCustomerName(Package.CustomerUID)</td>
+                            <td>@Package.Size</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

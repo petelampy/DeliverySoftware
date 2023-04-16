@@ -37,6 +37,8 @@ namespace DeliverySoftware.Database
                 Description = "Big box of bolts",
                 Size = 10,
                 UID = __SamplePackageUID,
+                DropNumber = 1,
+                IsDelivered = false
             };
         }
 

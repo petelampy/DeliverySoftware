@@ -2,5 +2,7 @@
 {
     public interface IPackageController
     {
+        List<Package> GetAll ();
+        List<Package> GetAllUndelivered ();
     }
 }

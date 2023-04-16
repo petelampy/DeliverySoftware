@@ -29,5 +29,14 @@ namespace DeliverySoftware.Business.Delivery
         {
             return __DbContext.Packages.ToList();
         }
+
+        public List<Package> GetAllUndelivered ()
+        {
+            return __DbContext
+                .Packages
+                .AsEnumerable()
+                .Where(package => !package.IsDelivered)
+                .ToList();
+        }
     }
 }
