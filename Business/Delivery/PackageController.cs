@@ -66,5 +66,14 @@ namespace DeliverySoftware.Business.Delivery
                .SingleOrDefault(new Package());
         }
 
+        public int GetPackageCountByDelivery(Guid delivery_uid)
+        {
+            return __DbContext
+               .Packages
+               .AsEnumerable()
+               .Where(package => package.DeliveryUID == delivery_uid)
+               .Count();
+        }
+
     }
 }

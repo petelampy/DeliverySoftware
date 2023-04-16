@@ -2,3 +2,42 @@
 @model DeliverySoftware.Pages.Driver.DeliveryRunsModel
 @{
 }
+
+
+<div>
+    <div class="row justify-content-center">
+        @if (Model.DeliveryRuns.Count < 1)
+        {
+                <h2 class="text-center display-6">No delivery runs available</h2>
+        }
+        else
+        {
+                <table class="mb-3">
+                    <thead>
+                        <tr>
+                            <th>
+                                Id
+                            </th>
+                            <th>
+                                Number Of Packages
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (Business.Delivery.Delivery DeliveryRun in Model.DeliveryRuns)
+                    {
+                        <tr>
+                            <td>@DeliveryRun.Id</td>
+                            <td>@DeliveryRun.NumberOfPackages</td>
+                            <td>@DeliveryRun.Status</td>
+                            <td><a class="btn btn-primary" role="button" asp-page="CurrentDelivery" asp-route-DeliveryRunUID="@DeliveryRun.UID">Start Delivery Run</a></td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+        }
+    </div>
+</div>

@@ -7,5 +7,6 @@
         List<Package> GetAllUndelivered ();
         Package GetByDeliveryAndDropNumber (Guid delivery_uid, int currentDropNumber);
         Package GetByTrackingCode (string trackingCode);
+        int GetPackageCountByDelivery (Guid delivery_uid);
     }
 }
