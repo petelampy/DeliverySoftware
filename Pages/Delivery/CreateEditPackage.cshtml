@@ -1,0 +1,56 @@
+﻿@page
+@model DeliverySoftware.Pages.Delivery.CreateEditPackageModel
+@{
+}
+
+<form method="post" novalidate>
+    <div>
+        <label asp-for="@Model.Package.Description">Description</label>
+        <div class="col-sm-10">
+            <input class="form-control" asp-for="@Model.Package.Description">
+        </div>
+        <span class="text-danger" asp-validation-for="@Model.Package.Description"></span>
+    </div>
+    <div>
+        <label asp-for="@Model.Package.Size">Size</label>
+        <div class="col-sm-10">
+            <input class="form-control" asp-for="@Model.Package.Size">
+        </div>
+        <span class="text-danger" asp-validation-for="@Model.Package.Size"></span>
+    </div>
+    <div>
+        <label asp-for="@Model.Package.TrackingCode">Tracking Code</label>
+        <div class="col-sm-10">
+            <input class="form-control" asp-for="@Model.Package.TrackingCode" disabled>
+        </div>
+        <span class="text-danger" asp-validation-for="@Model.Package.TrackingCode"></span>
+    </div>
+    <div>
+        <label asp-for="@Model.Package.CustomerUID">Customer Ordered</label>
+        <div class="col-sm-12">
+            <select class="form-select" asp-for="@Model.Package.CustomerUID" asp-items="@Model.CustomerSelection">Customer</select>
+        </div>
+    </div>
+    <div>
+        <label asp-for="@Model.Package.CustomerUID">Delivery Run</label>
+        <div class="col-sm-12">
+            <select class="form-select" asp-for="@Model.Package.DeliveryUID" asp-items="@Model.DeliverySelection">Delivery</select>
+        </div>
+    </div>
+
+    <input type="hidden" asp-for="@Model.Package.Id" />
+    <input type="hidden" asp-for="@Model.Package.UID" />
+    <input type="hidden" asp-for="@Model.Package.DropNumber" />
+    <input type="hidden" asp-for="@Model.Package.IsAssignedToDelivery" />
+    <input type="hidden" asp-for="@Model.Package.IsDelivered" />
+    <input type="hidden" asp-for="@Model.Package.TrackingCode" />
+
+    @if (Model.UID != Guid.Empty)
+    {
+            <input type="submit" value="Update Package">
+    }
+    else
+    {
+            <input type="submit" value="Create Package">
+    }
+</form>

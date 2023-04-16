@@ -16,19 +16,19 @@
                 <thead>
                     <tr>
                         <th>
-                            Id
+                            Tracking Code
                         </th>
                         <th>
                             Description
                         </th>
                         <th>
-                            Assigned to a delivery?
+                            Assigned to delivery?
                         </th>
                         <th>
                             Customer Ordered
                         </th>
                         <th>
-                            Package Size
+                            Size
                         </th>
                     </tr>
                 </thead>
@@ -36,11 +36,12 @@
                     @foreach (Package Package in Model.Packages)
                     {
                         <tr>
-                            <td>@Package.Id</td>
+                            <td>@Package.TrackingCode</td>
                             <td>@Package.Description</td>
                             <td>@Package.IsAssignedToDelivery</td>
                             <td>@Model.GetCustomerName(Package.CustomerUID)</td>
                             <td>@Package.Size</td>
+                            <td><a class="btn btn-secondary" role="button" asp-page="CreateEditPackage" asp-route-UID="@Package.UID"></a></td>
                         </tr>
                     }
                 </tbody>
@@ -48,3 +49,5 @@
         }
     </div>
 </div>
+
+<a class="btn btn-primary btn-lg" role="button" asp-page="CreateEditPackage">Create Package</a>

@@ -1,4 +1,5 @@
-﻿using DeliverySoftware.Database;
+﻿using DeliverySoftware.Business.Fleet;
+using DeliverySoftware.Database;
 
 namespace DeliverySoftware.Business.Delivery
 {
@@ -73,6 +74,39 @@ namespace DeliverySoftware.Business.Delivery
                .AsEnumerable()
                .Where(package => package.DeliveryUID == delivery_uid)
                .Count();
+        }
+
+        public void Create (Package newPackage)
+        {
+            newPackage.UID = Guid.NewGuid();
+            
+            if(newPackage.DeliveryUID != Guid.Empty)
+            {
+                newPackage.IsAssignedToDelivery = true;
+                newPackage.DropNumber = GetPackageCountByDelivery(newPackage.DeliveryUID) + 1;
+            }
+
+            __DbContext.Packages.Add(newPackage);
+            __DbContext.SaveChanges();
+        }
+
+        public void Update (Package updatedPackage)
+        {
+            Package _CurrentPackage = Get(updatedPackage.UID);
+
+            _CurrentPackage.Description = updatedPackage.Description;
+            _CurrentPackage.Size = updatedPackage.Size;
+            _CurrentPackage.CustomerUID = updatedPackage.CustomerUID;
+            _CurrentPackage.IsDelivered = updatedPackage.IsDelivered;
+            _CurrentPackage.TrackingCode = updatedPackage.TrackingCode;
+
+            if(_CurrentPackage.DeliveryUID == Guid.Empty && updatedPackage.DeliveryUID != Guid.Empty)
+            {
+                _CurrentPackage.IsAssignedToDelivery = true;
+                _CurrentPackage.DropNumber = GetPackageCountByDelivery(_CurrentPackage.DeliveryUID) + 1;
+            }
+
+            __DbContext.SaveChanges();
         }
 
     }
