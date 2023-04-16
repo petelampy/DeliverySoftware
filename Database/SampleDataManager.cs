@@ -21,7 +21,8 @@ namespace DeliverySoftware.Database
                 Id = 1,
                 UID = __SampleDeliveryUID,
                 NumberOfPackages = 1,
-                VanUID = __SampleVanUID
+                VanUID = __SampleVanUID,
+                Status = DeliveryStatus.Pending
             };
         }
 

@@ -37,5 +37,14 @@ namespace DeliverySoftware.Business.Fleet
                 .Where(van => van.DriverUID == driver_uid)
                 .Count();
         }
+
+        public string GetRegistration (Guid uid)
+        {
+            return __DbContext.Vans
+                .AsEnumerable()
+                .Where(van => van.UID == uid)
+                .SingleOrDefault(new Van())
+                .Registration;
+        }
     }
 }

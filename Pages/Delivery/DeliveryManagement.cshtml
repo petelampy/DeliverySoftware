@@ -2,3 +2,44 @@
 @model DeliverySoftware.Pages.Delivery.DeliveryManagementModel
 @{
 }
+
+<div>
+    <div class="row justify-content-center">
+        @if (Model.Deliveries.Count < 1)
+        {
+            <h2 class="text-center display-6">No active deliveries</h2>
+        }
+        else
+        {
+            <table class="mb-3">
+                <thead>
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            Number Of Packages
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th>
+                            Assigned Van
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Business.Delivery.Delivery Delivery in Model.Deliveries)
+                    {
+                        <tr>
+                            <td>@Delivery.Id</td>
+                            <td>@Delivery.NumberOfPackages</td>
+                            <td>@Delivery.Status</td>
+                            <td>@Model.GetVanRegistration(Delivery.VanUID)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

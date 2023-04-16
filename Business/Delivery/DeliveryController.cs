@@ -29,5 +29,14 @@ namespace DeliverySoftware.Business.Delivery
         {
             return __DbContext.Deliveries.ToList();
         }
+
+        public List<Delivery> GetAllAvailable ()
+        {
+            return __DbContext
+                .Deliveries
+                .AsEnumerable()
+                .Where(delivery => delivery.Status != DeliveryStatus.Completed)
+                .ToList();
+        }
     }
 }
