@@ -56,5 +56,15 @@ namespace DeliverySoftware.Business.Delivery
                 .Where(package => package.TrackingCode == trackingCode)
                 .Count() > 0;
         }
+
+        public Package GetByDeliveryAndDropNumber (Guid delivery_uid, int currentDropNumber)
+        {
+            return __DbContext
+               .Packages
+               .AsEnumerable()
+               .Where(package => package.DeliveryUID == delivery_uid && package.DropNumber == currentDropNumber)
+               .SingleOrDefault(new Package());
+        }
+
     }
 }

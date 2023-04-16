@@ -19,3 +19,14 @@
     <p>Delivery Address: @Model.Customer.Address</p>
     <p>Delivery PostCode: @Model.Customer.PostCode</p>
 </div>
+
+<input type="hidden" id="customerPostCode" name="customerPostCode" asp-for="@Model.Customer.PostCode" />
+<input type="hidden" id="customerHouseNumber" name="customerHouseNumber" asp-for="@Model.Customer.HouseNumber" />
+<input type="hidden" id="driverPostCode" name="driverPostCode" asp-for="@Model.DriverHouseNumber" />
+<input type="hidden" id="driverHouseNumber" name="driverHouseNumber" asp-for="@Model.DriverPostCode" />
+<div id="trackingMap" style="height: 400px; width: 600px;"></div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/Pages/Customer/OrderTracking.cshtml.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzLyXmbIGVxhJfVIurJYymXI-gsJsP5Zw&callback=loadMap"></script>
+}      

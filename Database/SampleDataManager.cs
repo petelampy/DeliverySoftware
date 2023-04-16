@@ -8,6 +8,7 @@ namespace DeliverySoftware.Database
     public class SampleDataManager
     {
         private static readonly Guid __SampleCustomerUID = new Guid("751e25c8-68ba-49dc-b1de-15fcb0bf210f");
+        private static readonly Guid __SampleCustomerUID2 = new Guid("52fac4db-3d93-46bc-81ef-f33aed467669");
         private static readonly Guid __SampleDeliveryUID = new Guid("3f3cf1cd-131d-4d05-93b9-21dbd082fcac");
         private static readonly Guid __SampleDriverUID = new Guid("16776aef-a5ff-424d-be7e-ea3fd591ce90");
         private static readonly Guid __SampleEmployeeUID = new Guid("ca6f5584-527f-4820-802f-bd329352c3e5");
@@ -34,7 +35,7 @@ namespace DeliverySoftware.Database
                 new Package
                 {
                     Id = 1,
-                    CustomerUID = __SampleCustomerUID,
+                    CustomerUID = __SampleCustomerUID2,
                     DeliveryUID = __SampleDeliveryUID,
                     IsAssignedToDelivery = true,
                     Description = "Big box of rocks",
@@ -76,6 +77,21 @@ namespace DeliverySoftware.Database
                     Address = "306 Sinfin Avenue, Derby, UK",
                     PostCode = "DE24 9QX",
                     HouseNumber = 306,
+                    Email = "petelampy@gmail.com",
+                    NormalizedEmail = "petelampy@gmail.com".ToUpper(),
+                    EmailConfirmed = true,
+                    UserType = UserType.Customer
+                },
+                new DeliveryUser
+                {
+                    Id = __SampleCustomerUID2.ToString(),
+                    UserName = "customerlogon2",
+                    NormalizedUserName = "CUSTOMERLOGON2",
+                    Forename = "Amos",
+                    Surname = "Burton",
+                    Address = "3 Bond End, Monks Kirby, Rugby, UK",
+                    PostCode = "CV23 0RD",
+                    HouseNumber = 3,
                     Email = "petelampy@gmail.com",
                     NormalizedEmail = "petelampy@gmail.com".ToUpper(),
                     EmailConfirmed = true,

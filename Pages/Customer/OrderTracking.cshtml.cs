@@ -26,6 +26,13 @@ namespace DeliverySoftware.Pages.Customer
                 Package = __PackageController.GetByTrackingCode(TrackingCode);
                 Customer = __UserController.Get(Package.CustomerUID);
                 DeliveryRun = __DeliveryController.Get(Package.DeliveryUID);
+
+                Package _CurrentDelivery = __PackageController
+                    .GetByDeliveryAndDropNumber(DeliveryRun.UID, DeliveryRun.CurrentDrop);
+
+                DeliveryUser _CurrentStopCustomer = __UserController.Get(_CurrentDelivery.CustomerUID);
+                DriverHouseNumber = _CurrentStopCustomer.HouseNumber.Value;
+                DriverPostCode = _CurrentStopCustomer.PostCode;
             }
             else
             {
@@ -43,5 +50,10 @@ namespace DeliverySoftware.Pages.Customer
         public DeliveryUser Customer { get; set; }
 
         public Business.Delivery.Delivery DeliveryRun { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int DriverHouseNumber { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string DriverPostCode { get; set; }
     }
 }

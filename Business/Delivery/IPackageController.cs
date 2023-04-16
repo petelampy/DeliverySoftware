@@ -5,6 +5,7 @@
         bool DoesTrackingCodeExist (string trackingCode);
         List<Package> GetAll ();
         List<Package> GetAllUndelivered ();
+        Package GetByDeliveryAndDropNumber (Guid delivery_uid, int currentDropNumber);
         Package GetByTrackingCode (string trackingCode);
     }
 }
