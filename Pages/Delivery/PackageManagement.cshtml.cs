@@ -12,11 +12,13 @@ namespace DeliverySoftware.Pages.Delivery
         private const string PERMISSION_DENIED_PAGE_PATH = "../PermissionDenied";
         private readonly IUserController __UserController;
         private readonly IPackageController __PackageController;
+        private readonly IDeliveryController __DeliveryController;
 
         public PackageManagementModel ()
         {
             __UserController = new UserController();
             __PackageController = new PackageController();
+            __DeliveryController = new DeliveryController();
         }
         public IActionResult OnGet ()
         {
@@ -38,6 +40,51 @@ namespace DeliverySoftware.Pages.Delivery
         public string GetCustomerName(Guid customer_uid)
         {
             return __UserController.GetName(customer_uid);
+        }
+
+        public bool IsPackageOutForDelivery(Guid uid)
+        {
+            Package _Package = __PackageController.Get(uid);
+            return _Package.IsAssignedToDelivery && __DeliveryController.HasDeliveryRunStarted(_Package.DeliveryUID);
+        }
+
+        public async Task<IActionResult> OnGetDeletePackage (Guid uid)
+        {
+            if (IsPackageOutForDelivery(uid))
+            {
+                ModelState.AddModelError("", "Package out for delivery, can't delete!");
+                return Page();
+            }
+            else
+            {
+                Package _Package = __PackageController.Get(uid);
+                Guid _DeliveryUID = _Package.DeliveryUID;
+                bool _PackageAssignedToDelivery = _Package.IsAssignedToDelivery;
+
+                __PackageController.Delete(uid);
+
+                if (_PackageAssignedToDelivery)
+                {
+                    int _NumberOfPackages = __PackageController.GetPackageCountByDelivery(_DeliveryUID);
+
+                    Business.Delivery.Delivery _DeliveryRun = __DeliveryController.Get(_DeliveryUID);
+                    _DeliveryRun.NumberOfPackages = _NumberOfPackages;
+                    __DeliveryController.Update(_DeliveryRun);
+
+                    List<Package> _PackagesRemaining = __PackageController.GetPackagesByDelivery(_DeliveryUID);
+
+                    int _Counter = 1;
+                    foreach(Package _PackageToUpdate in _PackagesRemaining)
+                    {
+                        _PackageToUpdate.DropNumber = _Counter;
+                        __PackageController.Update(_PackageToUpdate);
+
+                        _Counter += 1;
+                    }
+                }
+                
+                return RedirectToPage("PackageManagement");
+            }
         }
 
         public List<Package> Packages { get; set; }

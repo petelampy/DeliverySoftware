@@ -76,6 +76,15 @@ namespace DeliverySoftware.Business.Delivery
                .Count();
         }
 
+        public List<Package> GetPackagesByDelivery (Guid delivery_uid)
+        {
+            return __DbContext
+               .Packages
+               .AsEnumerable()
+               .Where(package => package.DeliveryUID == delivery_uid)
+               .ToList();
+        }
+
         public int GetActivePackagesByCustomer (Guid customer_uid)
         {
             return __DbContext
@@ -115,6 +124,14 @@ namespace DeliverySoftware.Business.Delivery
                 _CurrentPackage.DropNumber = GetPackageCountByDelivery(_CurrentPackage.DeliveryUID) + 1;
             }
 
+            __DbContext.SaveChanges();
+        }
+
+        public void Delete (Guid uid)
+        {
+            Package _Package = Get(uid);
+
+            __DbContext.Remove(_Package);
             __DbContext.SaveChanges();
         }
 

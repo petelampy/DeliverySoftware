@@ -8,6 +8,7 @@
         List<Delivery> GetAll ();
         List<Delivery> GetAllAvailable ();
         int GetCountByVan (Guid van_uid);
+        bool HasDeliveryRunStarted (Guid uid);
         void Update (Delivery updatedDelivery);
     }
 }

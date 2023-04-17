@@ -49,6 +49,15 @@ namespace DeliverySoftware.Business.Delivery
                 .Count();
         }
 
+        public bool HasDeliveryRunStarted (Guid uid)
+        {
+            return __DbContext
+                .Deliveries
+                .AsEnumerable()
+                .Where(delivery => delivery.UID == uid && delivery.Status == DeliveryStatus.Started)
+                .Count() > 0;
+        }
+
         public void Create (Delivery newDelivery)
         {
             newDelivery.UID = Guid.NewGuid();
