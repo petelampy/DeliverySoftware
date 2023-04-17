@@ -4,7 +4,8 @@
 @{
 }
 
-<div>
+<div class="container-sm m-auto bg-card rounded-3 border p-5 shadow-lg">
+    <h1 class="text-center display-4 mb-3">Packages</h1>
     <div class="row justify-content-center">
         @if (Model.Packages.Count < 1)
         {
@@ -38,7 +39,7 @@
                             <td>@Model.GetCustomerName(Package.CustomerUID)</td>
                             <td>@Package.Size</td>
                             <td>
-                                <a class="btn btn-secondary" role="button" asp-page="CreateEditPackage" asp-route-UID="@Package.UID">Edit</a>
+                                <a class="btn btn-primary" role="button" asp-page="CreateEditPackage" asp-route-UID="@Package.UID">Edit</a>
                                 @if (Model.IsPackageOutForDelivery(Package.UID))
                                 {
                                     <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="This package is out for delivery, and can't be deleted!">
@@ -56,9 +57,15 @@
             </table>
         }
     </div>
+    <hr />
+    <div class="row">
+        <div class="col text-center">
+            <a class="btn btn-primary btn-lg align-middle" role="button" asp-page="CreateEditPackage">Create Package</a>
+        </div>
+    </div>
 </div>
 
-<a class="btn btn-primary btn-lg" role="button" asp-page="CreateEditPackage">Create Package</a>
+
 
 
 @*Modal for Deleting a Package*@
