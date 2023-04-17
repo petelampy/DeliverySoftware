@@ -3,6 +3,7 @@
     public interface IVanController
     {
         void Create (Van newVan);
+        void Delete (Guid uid);
         Van Get (Guid uid);
         List<Van> GetAll ();
         int GetCountByDriver (Guid driver_uid);

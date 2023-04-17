@@ -47,6 +47,23 @@ namespace DeliverySoftware.Pages.Fleet
             return __DeliveryController.GetCountByVan(van_uid);
         }
 
+        public async Task<IActionResult> OnGetDeleteVan (Guid uid)
+        {
+            bool _VanHasDeliveries = GetActiveDeliveries(uid) > 0;
+
+            if (_VanHasDeliveries)
+            {
+                ModelState.AddModelError("", "Van in use, can't delete!");
+                return Page();
+            }
+            else
+            {
+                __VanController.Delete(uid);
+                return RedirectToPage("FleetManagement");
+            }
+        }
+
+
         public List<Van> Vans { get; set; }
     }
 }

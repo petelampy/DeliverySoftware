@@ -45,7 +45,7 @@ namespace DeliverySoftware.Business.Delivery
             return __DbContext
                 .Deliveries
                 .AsEnumerable()
-                .Where(delivery => delivery.VanUID == van_uid)
+                .Where(delivery => delivery.VanUID == van_uid && delivery.Status != DeliveryStatus.Completed)
                 .Count();
         }
 

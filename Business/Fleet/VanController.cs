@@ -66,5 +66,13 @@ namespace DeliverySoftware.Business.Fleet
 
             __DbContext.SaveChanges();
         }
+
+        public void Delete (Guid uid)
+        {
+            Van _Van = Get(uid);
+
+            __DbContext.Remove(_Van);
+            __DbContext.SaveChanges();
+        }
     }
 }
