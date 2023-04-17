@@ -62,13 +62,20 @@ namespace DeliverySoftware.Pages.Account
         {
             bool _IsValidTrackingCode = __PackageController.DoesTrackingCodeExist(trackingCode);
 
+            if(trackingCode == null || trackingCode.Length < 1)
+            {
+                ModelState.Clear();
+                ModelState.AddModelError("TrackingCode", "Tracking Code is required!");
+                return Page();
+            }
+
             if(_IsValidTrackingCode)
             {
                 return RedirectToPage(ORDER_TRACKING_PAGE_PATH, new { TrackingCode = trackingCode });
             }
             else
             {
-                ModelState.AddModelError("trackingcode", "Invalid tracking code!");
+                ModelState.AddModelError("TrackingCode", "Invalid tracking code!");
                 return Page();
             }
         }
