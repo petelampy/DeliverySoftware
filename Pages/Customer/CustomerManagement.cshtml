@@ -4,7 +4,8 @@
 @{
 }
 
-<div>
+<div class="container-sm m-auto bg-card rounded-3 border p-5 shadow-lg">
+    <h1 class="text-center display-4 mb-3">Customer Management</h1>
     <div class="row justify-content-center">
         @if (Model.Customers.Count < 1)
         {
@@ -56,9 +57,15 @@
             </table>
         }
     </div>
+    <hr />
+    <div class="row">
+        <div class="col text-center">
+            <a class="btn btn-primary btn-lg" role="button" asp-page="../User/CreateEditUser" asp-route-UserTypeToCreateOrEdit="@UserType.Customer">Create Customer</a>
+        </div>
+    </div>
 </div>
 
-<a class="btn btn-primary btn-lg" role="button" asp-page="../User/CreateEditUser" asp-route-UserTypeToCreateOrEdit="@UserType.Customer">Create Customer</a>
+
 
 
 
