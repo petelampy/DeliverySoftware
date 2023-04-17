@@ -40,6 +40,24 @@ namespace DeliverySoftware.Pages.Driver
             return __VanController.GetCountByDriver(driver_uid);
         }
 
+        public async Task<IActionResult> OnGetDeleteDriver (string id)
+        {
+            Guid _UID = new Guid(id);
+
+            bool _DriverHasVans = GetDriverVanCount(_UID) > 0;
+
+            if (_DriverHasVans)
+            {
+                ModelState.AddModelError("", "Driver in use, can't delete!");
+                return Page();
+            }
+            else
+            {
+                __UserController.Delete(_UID);
+                return RedirectToPage("DriverManagement");
+            }
+        }
+
         public List<DeliveryUser> Drivers { get; set; }
     }
 }
