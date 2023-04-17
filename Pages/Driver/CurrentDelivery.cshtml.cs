@@ -1,5 +1,6 @@
 using DeliverySoftware.Business.Delivery;
 using DeliverySoftware.Business.Users;
+using DeliverySoftware.Business.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
@@ -13,12 +14,14 @@ namespace DeliverySoftware.Pages.Driver
         private readonly IDeliveryController __DeliveryController;
         private readonly IPackageController __PackageController;
         private readonly IUserController __UserController;
+        private readonly IEmailController __EmailController;
 
         public CurrentDeliveryModel ()
         {
             __UserController = new UserController();
             __DeliveryController = new DeliveryController();
             __PackageController = new PackageController();
+            __EmailController = new EmailController();
         }
 
         public IActionResult OnGet ()
@@ -32,16 +35,44 @@ namespace DeliverySoftware.Pages.Driver
                 {
                     DeliveryRun = __DeliveryController.Get(DeliveryRunUID);
 
-                    if(DeliveryRun.Status == DeliveryStatus.Pending)
-                    {
-                        DeliveryRun.Status = DeliveryStatus.Started;
-                        __DeliveryController.Update(DeliveryRun);
-                    }              
-
                     CurrentDrop = __PackageController
                         .GetByDeliveryAndDropNumber(DeliveryRun.UID, DeliveryRun.CurrentDrop);
 
                     CurrentStopCustomer = __UserController.Get(CurrentDrop.CustomerUID);
+
+                    if (DeliveryRun.Status == DeliveryStatus.Pending)
+                    {
+                        DeliveryRun.Status = DeliveryStatus.Started;
+                        __DeliveryController.Update(DeliveryRun);
+
+
+                        List<Package> _Packages = __PackageController.GetPackagesByDelivery(DeliveryRunUID);
+
+                        List<Guid> _CustomerUIDs = _Packages
+                            .Select(package => package.CustomerUID)
+                            .ToList();
+
+                        List<DeliveryUser> _Customers = __UserController.Get(_CustomerUIDs);
+
+                        foreach(Package _Package in _Packages)
+                        {
+                            DeliveryUser _Customer = _Customers
+                                    .Where(customer => customer.Id == _Package.CustomerUID.ToString())
+                                    .SingleOrDefault(new DeliveryUser());
+
+                            Email _CustomerNotification = new Email()
+                            {
+                                Recipient = _Customer.Email,
+                                Subject = "Your Order is Out For Delivery!",
+                                Body = "Hi " + _Customer.Forename + ",\n\n" 
+                                + "Your order of " + _Package.Description  +" is out for delivery!\n\n"
+                                + "Keep an eye on your tracking page with the code: " + _Package.TrackingCode + "\n\n"
+                                + "Thanks, Delivery+ Software Solutions"
+                            };
+
+                            __EmailController.SendEmail(_CustomerNotification);
+                        }
+                    }              
                 }
                 else
                 {

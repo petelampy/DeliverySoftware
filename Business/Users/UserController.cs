@@ -32,6 +32,14 @@ namespace DeliverySoftware.Business.Users
                  .SingleOrDefault(new DeliveryUser());
         }
 
+        public List<DeliveryUser> Get (List<Guid> uids)
+        {
+            return __DbContext.Users
+                 .ToList()
+                 .Where(user => uids.Contains(new Guid(user.Id)))
+                 .ToList();
+        }
+
         public string GetName (Guid uid)
         {
             DeliveryUser _User = __DbContext.Users

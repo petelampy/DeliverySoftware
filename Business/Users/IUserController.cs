@@ -5,6 +5,7 @@
         void Create (DeliveryUser newUser);
         void Delete (Guid uid);
         DeliveryUser Get (Guid uid);
+        List<DeliveryUser> Get (List<Guid> uids);
         List<DeliveryUser> GetAll ();
         List<DeliveryUser> GetAllCustomers ();
         List<DeliveryUser> GetAllDrivers ();
