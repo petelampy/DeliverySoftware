@@ -13,12 +13,14 @@ namespace DeliverySoftware.Pages.Delivery
         private readonly IUserController __UserController;
         private readonly IDeliveryController __DeliveryController;
         private readonly IVanController __VanController;
+        private readonly IPackageController __PackageController;
 
         public DeliveryManagementModel ()
         {
             __UserController = new UserController();
             __DeliveryController = new DeliveryController();
             __VanController = new VanController();
+            __PackageController = new PackageController();
         }
         public IActionResult OnGet ()
         {
@@ -40,6 +42,27 @@ namespace DeliverySoftware.Pages.Delivery
         public string GetVanRegistration(Guid van_uid)
         {
             return __VanController.GetRegistration(van_uid);
+        }
+
+        public bool DoesDeliveryHavePackages (Guid uid)
+        {
+            return __PackageController.GetPackageCountByDelivery(uid) > 0;
+        }
+
+        public async Task<IActionResult> OnGetDeleteDelivery (Guid uid)
+        {
+            bool _DeliveryHasPackages = DoesDeliveryHavePackages(uid);
+
+            if (_DeliveryHasPackages)
+            {
+                ModelState.AddModelError("", "Delivery in use, can't delete!");
+                return Page();
+            }
+            else
+            {
+                __DeliveryController.Delete(uid);
+                return RedirectToPage("DeliveryManagement");
+            }
         }
 
         public List<Business.Delivery.Delivery> Deliveries { get; set; }

@@ -71,5 +71,13 @@ namespace DeliverySoftware.Business.Delivery
 
             __DbContext.SaveChanges();
         }
+
+        public void Delete (Guid uid)
+        {
+            Delivery _Delivery = Get(uid);
+
+            __DbContext.Remove(_Delivery);
+            __DbContext.SaveChanges();
+        }
     }
 }
