@@ -3,37 +3,52 @@
 @{
 }
 
-<form method="post" novalidate>
-    <div>
-        <label asp-for="@Model.Van.Registration">Registration</label>
-        <div class="col-sm-10">
-            <input class="form-control" asp-for="@Model.Van.Registration">
-        </div>
-        <span class="text-danger" asp-validation-for="@Model.Van.Registration"></span>
-    </div>
-    <div>
-        <label asp-for="@Model.Van.Capacity">Capacity (m&sup2;)</label>
-        <div class="col-sm-10">
-            <input class="form-control" asp-for="@Model.Van.Capacity">
-        </div>
-        <span class="text-danger" asp-validation-for="@Model.Van.Capacity"></span>
-    </div>
-    <div>
-        <label asp-for="@Model.Van.DriverUID">Assigned Driver</label>
-        <div class="col-sm-12">
-            <select class="form-select" asp-for="@Model.Van.DriverUID" asp-items="@Model.DriverSelection">Driver</select>
-        </div>
-    </div>
 
-    <input type="hidden" asp-for="@Model.Van.Id" />
-    <input type="hidden" asp-for="@Model.Van.UID" />
-
+<div class="col-md-6 m-auto bg-card rounded-3 border p-5 shadow-lg">
     @if (Model.UID != Guid.Empty)
     {
-        <input type="submit" value="Update Van">
+        <h1 class="display-5 mb-3 text-center">Update Van</h1>
     }
     else
     {
-        <input type="submit" value="Create Van">
+        <h1 class="display-5 mb-3 text-center">Create Van</h1>
     }
-</form>
+    <form method="post" novalidate>
+        <div>
+            <label asp-for="@Model.Van.Registration">Registration</label>
+            <div class="col-sm-12">
+                <input class="form-control" asp-for="@Model.Van.Registration">
+            </div>
+            <span class="text-danger" asp-validation-for="@Model.Van.Registration"></span>
+        </div>
+        <div>
+            <label asp-for="@Model.Van.Capacity">Capacity (m&sup2;)</label>
+            <div class="col-sm-12">
+                <input class="form-control" asp-for="@Model.Van.Capacity">
+            </div>
+            <span class="text-danger" asp-validation-for="@Model.Van.Capacity"></span>
+        </div>
+        <div>
+            <label asp-for="@Model.Van.DriverUID">Assigned Driver</label>
+            <div class="col-sm-12">
+                <select class="form-select" asp-for="@Model.Van.DriverUID" asp-items="@Model.DriverSelection">Driver</select>
+            </div>
+        </div>
+
+        <input type="hidden" asp-for="@Model.Van.Id" />
+        <input type="hidden" asp-for="@Model.Van.UID" />
+
+        <div class="row mt-5">
+                    <div class="col text-center">
+                @if (Model.UID != Guid.Empty)
+                {
+                        <input class="btn btn-primary btn-lg" type="submit" value="Update Van">
+                }
+                else
+                {
+                        <input class="btn btn-primary btn-lg" type="submit" value="Create Van">
+                }
+                </div>
+        </div>
+    </form>
+</div>

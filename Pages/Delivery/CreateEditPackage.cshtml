@@ -3,54 +3,72 @@
 @{
 }
 
-<form method="post" novalidate>
-    <div>
-        <label asp-for="@Model.Package.Description">Description</label>
-        <div class="col-sm-10">
-            <input class="form-control" asp-for="@Model.Package.Description">
-        </div>
-        <span class="text-danger" asp-validation-for="@Model.Package.Description"></span>
-    </div>
-    <div>
-        <label asp-for="@Model.Package.Size">Size (m&sup2;)</label>
-        <div class="col-sm-10">
-            <input class="form-control" asp-for="@Model.Package.Size">
-        </div>
-        <span class="text-danger" asp-validation-for="@Model.Package.Size"></span>
-    </div>
-    <div>
-        <label asp-for="@Model.Package.TrackingCode">Tracking Code</label>
-        <div class="col-sm-10">
-            <input class="form-control" asp-for="@Model.Package.TrackingCode" disabled>
-        </div>
-        <span class="text-danger" asp-validation-for="@Model.Package.TrackingCode"></span>
-    </div>
-    <div>
-        <label asp-for="@Model.Package.CustomerUID">Customer Ordered</label>
-        <div class="col-sm-12">
-            <select class="form-select" asp-for="@Model.Package.CustomerUID" asp-items="@Model.CustomerSelection">Customer</select>
-        </div>
-    </div>
-    <div>
-        <label asp-for="@Model.Package.CustomerUID">Delivery Run</label>
-        <div class="col-sm-12">
-            <select class="form-select" asp-for="@Model.Package.DeliveryUID" asp-items="@Model.DeliverySelection">Delivery</select>
-        </div>
-    </div>
-
-    <input type="hidden" asp-for="@Model.Package.Id" />
-    <input type="hidden" asp-for="@Model.Package.UID" />
-    <input type="hidden" asp-for="@Model.Package.DropNumber" />
-    <input type="hidden" asp-for="@Model.Package.IsAssignedToDelivery" />
-    <input type="hidden" asp-for="@Model.Package.IsDelivered" />
-    <input type="hidden" asp-for="@Model.Package.TrackingCode" />
-
+<div class="col-md-6 m-auto bg-card rounded-3 border p-5 shadow-lg">
     @if (Model.UID != Guid.Empty)
     {
-            <input type="submit" value="Update Package">
+        <h1 class="display-5 mb-3 text-center">Update Package</h1>
     }
     else
     {
-            <input type="submit" value="Create Package">
+        <h1 class="display-5 mb-3 text-center">Create Package</h1>
     }
-</form>
+    
+    <form method="post" novalidate>
+        <div class="form-group form-floating">
+            <div class="row">
+                <label asp-for="@Model.Package.Description">Description</label>
+                <div class="col-sm-12">
+                    <input class="form-control" asp-for="@Model.Package.Description">
+                </div>
+                <span class="text-danger" asp-validation-for="@Model.Package.Description"></span>
+            </div>
+            <div class="row">
+                <label asp-for="@Model.Package.Size">Size (m&sup2;)</label>
+                <div class="col-sm-12">
+                    <input class="form-control" asp-for="@Model.Package.Size">
+                </div>
+                <span class="text-danger" asp-validation-for="@Model.Package.Size"></span>
+            </div>
+            <div class="row">
+                <label asp-for="@Model.Package.TrackingCode">Tracking Code</label>
+                <div class="col-sm-12">
+                    <input class="form-control" asp-for="@Model.Package.TrackingCode" disabled>
+                </div>
+                <span class="text-danger" asp-validation-for="@Model.Package.TrackingCode"></span>
+            </div>
+            <div class="row">
+                <label asp-for="@Model.Package.CustomerUID">Customer Ordered</label>
+                <div class="col-sm-12">
+                    <select class="form-select" asp-for="@Model.Package.CustomerUID" asp-items="@Model.CustomerSelection">Customer</select>
+                </div>
+            </div>
+            <div class="row">
+                <label asp-for="@Model.Package.CustomerUID">Delivery Run</label>
+                <div class="col-sm-12">
+                    <select class="form-select" asp-for="@Model.Package.DeliveryUID" asp-items="@Model.DeliverySelection">Delivery</select>
+                </div>
+            </div>
+
+            <input type="hidden" asp-for="@Model.Package.Id" />
+            <input type="hidden" asp-for="@Model.Package.UID" />
+            <input type="hidden" asp-for="@Model.Package.DropNumber" />
+            <input type="hidden" asp-for="@Model.Package.IsAssignedToDelivery" />
+            <input type="hidden" asp-for="@Model.Package.IsDelivered" />
+            <input type="hidden" asp-for="@Model.Package.TrackingCode" />
+
+            <div class="row mt-5">
+                <div class="col text-center">
+                    @if (Model.UID != Guid.Empty)
+                    {
+                        <input class="btn btn-primary btn-lg" type="submit" value="Update Package">
+                    }
+                    else
+                    {
+                        <input class="btn btn-primary btn-lg" type="submit" value="Create Package">
+                    }
+                </div>
+            </div>
+            
+        </div>
+    </form>
+</div>

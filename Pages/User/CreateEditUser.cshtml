@@ -4,78 +4,123 @@
 @{
 }
 
-<form method="post" novalidate>
-    <div>
-        <label asp-for="@Model.ModifiedUser.Forename">Forename</label>
-        <div class="col-sm-10">
-            <input class="form-control" asp-for="@Model.ModifiedUser.Forename">
-        </div>
-        <span class="text-danger" asp-validation-for="@Model.ModifiedUser.Forename"></span>
-    </div>
-    <div>
-        <label asp-for="@Model.ModifiedUser.Surname">Surname</label>
-        <div class="col-sm-10">
-            <input class="form-control" asp-for="@Model.ModifiedUser.Surname">
-        </div>
-        <span class="text-danger" asp-validation-for="@Model.ModifiedUser.Surname"></span>
-    </div>
-    @if(Model.UserTypeToCreateOrEdit != UserType.Customer)
-    {
-        <div>
-            <label asp-for="@Model.ModifiedUser.UserName">Username</label>
-            <div class="col-sm-10">
-                <input class="form-control" asp-for="@Model.ModifiedUser.UserName">
-            </div>
-            <span class="text-danger" asp-validation-for="@Model.ModifiedUser.UserName"></span>
-        </div>
-    }
-    <div>
-        <label asp-for="@Model.ModifiedUser.Email">Email</label>
-        <div class="col-sm-10">
-            <input class="form-control" asp-for="@Model.ModifiedUser.Email">
-        </div>
-        <span class="text-danger" asp-validation-for="@Model.ModifiedUser.Email"></span>
-    </div>
-
-    @if(Model.UserTypeToCreateOrEdit == UserType.Customer) {
-        <div>
-            <label asp-for="@Model.ModifiedUser.HouseNumber">House Number</label>
-            <div class="col-sm-10">
-                <input class="form-control" asp-for="@Model.ModifiedUser.HouseNumber">
-            </div>
-            <span class="text-danger" asp-validation-for="@Model.ModifiedUser.HouseNumber"></span>
-        </div>
-        <div>
-            <label asp-for="@Model.ModifiedUser.Address">Address</label>
-            <div class="col-sm-10">
-                <input class="form-control" asp-for="@Model.ModifiedUser.Address">
-            </div>
-            <span class="text-danger" asp-validation-for="@Model.ModifiedUser.Address"></span>
-        </div>
-        <div>
-            <label asp-for="@Model.ModifiedUser.PostCode">Post Code</label>
-            <div class="col-sm-10">
-                <input class="form-control" asp-for="@Model.ModifiedUser.PostCode">
-            </div>
-            <span class="text-danger" asp-validation-for="@Model.ModifiedUser.PostCode"></span>
-        </div>
-    }
-
-    @if (Model.UserTypeToCreateOrEdit != UserType.Customer)
-    {
-        <input type="hidden" asp-for="@Model.ModifiedUser.UserName" />
-    }
-
-    <input type="hidden" asp-for="@Model.ModifiedUser.Id" />
-    <input type="hidden" asp-for="@Model.ModifiedUser.UserType" />
-    <input type="hidden" asp-for="@Model.UserTypeToCreateOrEdit" />
-
+<div class="col-md-6 m-auto bg-card rounded-3 border p-5 shadow-lg">
     @if (Model.UID != Guid.Empty)
     {
-        <input type="submit" value="Update User">
+        if(Model.ModifiedUser.UserType == UserType.Customer)
+        {
+            <h1 class="display-5 mb-3 text-center">Update Customer</h1>
+        }
+        if (Model.ModifiedUser.UserType == UserType.Driver)
+        {
+            <h1 class="display-5 mb-3 text-center">Update Driver</h1>
+        }
     }
     else
     {
-        <input type="submit" value="Create User">
+        if (Model.UserTypeToCreateOrEdit == UserType.Customer)
+        {
+            <h1 class="display-5 mb-3 text-center">Create Customer</h1>
+        }
+        if (Model.UserTypeToCreateOrEdit == UserType.Driver)
+        {
+            <h1 class="display-5 mb-3 text-center">Create Driver</h1>
+        }
     }
-</form>
+
+    <form method="post" novalidate>
+        <div>
+            <label asp-for="@Model.ModifiedUser.Forename">Forename</label>
+            <div class="col-sm-12">
+                <input class="form-control" asp-for="@Model.ModifiedUser.Forename">
+            </div>
+            <span class="text-danger" asp-validation-for="@Model.ModifiedUser.Forename"></span>
+        </div>
+        <div>
+            <label asp-for="@Model.ModifiedUser.Surname">Surname</label>
+            <div class="col-sm-12">
+                <input class="form-control" asp-for="@Model.ModifiedUser.Surname">
+            </div>
+            <span class="text-danger" asp-validation-for="@Model.ModifiedUser.Surname"></span>
+        </div>
+        @if (Model.UserTypeToCreateOrEdit != UserType.Customer)
+        {
+            <div>
+                <label asp-for="@Model.ModifiedUser.UserName">Username</label>
+                <div class="col-sm-12">
+                    <input class="form-control" asp-for="@Model.ModifiedUser.UserName">
+                </div>
+                <span class="text-danger" asp-validation-for="@Model.ModifiedUser.UserName"></span>
+            </div>
+        }
+        <div>
+            <label asp-for="@Model.ModifiedUser.Email">Email</label>
+            <div class="col-sm-12">
+                <input class="form-control" asp-for="@Model.ModifiedUser.Email">
+            </div>
+            <span class="text-danger" asp-validation-for="@Model.ModifiedUser.Email"></span>
+        </div>
+
+        @if (Model.UserTypeToCreateOrEdit == UserType.Customer)
+        {
+            <div>
+                <label asp-for="@Model.ModifiedUser.HouseNumber">House Number</label>
+                <div class="col-sm-12">
+                    <input class="form-control" asp-for="@Model.ModifiedUser.HouseNumber">
+                </div>
+                <span class="text-danger" asp-validation-for="@Model.ModifiedUser.HouseNumber"></span>
+            </div>
+            <div>
+                <label asp-for="@Model.ModifiedUser.Address">Address</label>
+                <div class="col-sm-12">
+                    <input class="form-control" asp-for="@Model.ModifiedUser.Address">
+                </div>
+                <span class="text-danger" asp-validation-for="@Model.ModifiedUser.Address"></span>
+            </div>
+            <div>
+                <label asp-for="@Model.ModifiedUser.PostCode">Post Code</label>
+                <div class="col-sm-12">
+                    <input class="form-control" asp-for="@Model.ModifiedUser.PostCode">
+                </div>
+                <span class="text-danger" asp-validation-for="@Model.ModifiedUser.PostCode"></span>
+            </div>
+        }
+
+        @if (Model.UserTypeToCreateOrEdit != UserType.Customer)
+        {
+            <input type="hidden" asp-for="@Model.ModifiedUser.UserName" />
+        }
+
+        <input type="hidden" asp-for="@Model.ModifiedUser.Id" />
+        <input type="hidden" asp-for="@Model.ModifiedUser.UserType" />
+        <input type="hidden" asp-for="@Model.UserTypeToCreateOrEdit" />
+
+        <div class="row mt-5">
+            <div class="col text-center">
+                @if (Model.UID != Guid.Empty)
+                {
+                    if (Model.ModifiedUser.UserType == UserType.Customer)
+                    {
+                        <input class="btn btn-primary btn-lg" type="submit" value="Update Customer">
+                    }
+                    if (Model.ModifiedUser.UserType == UserType.Driver)
+                    {
+                        <input class="btn btn-primary btn-lg" type="submit" value="Update Driver">
+                    }
+                }
+                else
+                {
+                    if (Model.UserTypeToCreateOrEdit == UserType.Customer)
+                    {
+                        <input class="btn btn-primary btn-lg" type="submit" value="Create Customer">
+                    }
+                    if (Model.UserTypeToCreateOrEdit == UserType.Driver)
+                    {
+                        <input class="btn btn-primary btn-lg" type="submit" value="Create Driver">
+                    }
+                }
+            </div>
+        </div>
+    </form>
+</div>
+

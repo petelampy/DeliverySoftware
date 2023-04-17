@@ -3,55 +3,68 @@
 @{
 }
 
-<form method="post" novalidate>
-    
-    @if(Model.UID != Guid.Empty)
-    {
-        <div>
-        <label asp-for="@Model.DeliveryRun.Id">ID</label>
-        <div class="col-sm-10">
-            <input class="form-control" asp-for="@Model.DeliveryRun.Id" disabled>
-        </div>
-        </div>
-        <div>
-            <label asp-for="@Model.DeliveryRun.NumberOfPackages">Number Of Packages</label>
-            <div class="col-sm-10">
-                <input class="form-control" asp-for="@Model.DeliveryRun.NumberOfPackages" disabled>
-            </div>
-        </div>
-        <div>
-            <label asp-for="@Model.DeliveryRun.CurrentDrop">Current Drop</label>
-            <div class="col-sm-10">
-                <input class="form-control" asp-for="@Model.DeliveryRun.CurrentDrop" disabled>
-            </div>
-        </div>
-        <div>
-            <label asp-for="@Model.DeliveryRun.Status">Status</label>
-            <div class="col-sm-10">
-                <input class="form-control" asp-for="@Model.DeliveryRun.Status" disabled>
-            </div>
-        </div>
-    }
-    
-    <div>
-        <label asp-for="@Model.DeliveryRun.VanUID">Assigned Van</label>
-        <div class="col-sm-12">
-            <select class="form-select" asp-for="@Model.DeliveryRun.VanUID" asp-items="@Model.VanSelection">Van</select>
-        </div>
-    </div>
-
-    <input type="hidden" asp-for="@Model.DeliveryRun.Id" />
-    <input type="hidden" asp-for="@Model.DeliveryRun.UID" />
-    <input type="hidden" asp-for="@Model.DeliveryRun.NumberOfPackages" />
-    <input type="hidden" asp-for="@Model.DeliveryRun.Status" />
-    <input type="hidden" asp-for="@Model.DeliveryRun.CurrentDrop" />
-
+<div class="col-md-6 m-auto bg-card rounded-3 border p-5 shadow-lg">
     @if (Model.UID != Guid.Empty)
     {
-        <input type="submit" value="Update Delivery">
+        <h1 class="display-5 mb-3 text-center">Update Delivery</h1>
     }
     else
     {
-        <input type="submit" value="Create Delivery">
+        <h1 class="display-5 mb-3 text-center">Create Delivery</h1>
     }
-</form>
+    <form method="post" novalidate>
+        @if (Model.UID != Guid.Empty)
+        {
+            <div>
+                <label asp-for="@Model.DeliveryRun.Id">ID</label>
+                <div class="col-sm-12">
+                    <input class="form-control" asp-for="@Model.DeliveryRun.Id" disabled>
+                </div>
+            </div>
+            <div>
+                <label asp-for="@Model.DeliveryRun.NumberOfPackages">Number Of Packages</label>
+                <div class="col-sm-12">
+                    <input class="form-control" asp-for="@Model.DeliveryRun.NumberOfPackages" disabled>
+                </div>
+            </div>
+            <div>
+                <label asp-for="@Model.DeliveryRun.CurrentDrop">Current Drop</label>
+                <div class="col-sm-12">
+                    <input class="form-control" asp-for="@Model.DeliveryRun.CurrentDrop" disabled>
+                </div>
+            </div>
+            <div>
+                <label asp-for="@Model.DeliveryRun.Status">Status</label>
+                <div class="col-sm-12">
+                    <input class="form-control" asp-for="@Model.DeliveryRun.Status" disabled>
+                </div>
+            </div>
+        }
+
+        <div>
+            <label asp-for="@Model.DeliveryRun.VanUID">Assigned Van</label>
+            <div class="col-sm-12">
+                <select class="form-select" asp-for="@Model.DeliveryRun.VanUID" asp-items="@Model.VanSelection">Van</select>
+            </div>
+        </div>
+
+        <input type="hidden" asp-for="@Model.DeliveryRun.Id" />
+        <input type="hidden" asp-for="@Model.DeliveryRun.UID" />
+        <input type="hidden" asp-for="@Model.DeliveryRun.NumberOfPackages" />
+        <input type="hidden" asp-for="@Model.DeliveryRun.Status" />
+        <input type="hidden" asp-for="@Model.DeliveryRun.CurrentDrop" />
+
+        <div class="row mt-5">
+                    <div class="col text-center">
+                @if (Model.UID != Guid.Empty)
+                {
+                    <input class="btn btn-primary btn-lg" type="submit" value="Update Delivery">
+                }
+                else
+                {
+                    <input class="btn btn-primary btn-lg" type="submit" value="Create Delivery">
+                }
+                </div>
+        </div>
+    </form>
+</div>
