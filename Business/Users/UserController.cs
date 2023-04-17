@@ -1,4 +1,5 @@
 ﻿using DeliverySoftware.Business.Fleet;
+using DeliverySoftware.Business.Utilities;
 using DeliverySoftware.Database;
 using Microsoft.AspNetCore.Identity;
 
@@ -9,16 +10,18 @@ namespace DeliverySoftware.Business.Users
         private readonly DeliveryDBContext __DbContext;
         private readonly IDBContextManager __DbContextManager;
         private readonly IPasswordHasher<DeliveryUser> __PasswordHasher;
+        private readonly IEmailController __EmailController;
 
         public UserController () :
-            this(new DBContextManager(), new PasswordHasher<DeliveryUser>())
+            this(new DBContextManager(), new PasswordHasher<DeliveryUser>(), new EmailController())
         { }
 
-        internal UserController (IDBContextManager dbContextManager, IPasswordHasher<DeliveryUser> passwordHasher)
+        internal UserController (IDBContextManager dbContextManager, IPasswordHasher<DeliveryUser> passwordHasher, IEmailController emailController)
         {
             __DbContextManager = dbContextManager;
             __DbContext = __DbContextManager.CreateNewDatabaseContext();
             __PasswordHasher = passwordHasher;
+            __EmailController = emailController;
         }
 
         public DeliveryUser Get (Guid uid)
@@ -81,6 +84,22 @@ namespace DeliverySoftware.Business.Users
             }
 
             int _TempPassword = GenerateTemporaryPassword();
+
+            if (newUser.UserType == UserType.Driver || newUser.UserType == UserType.Employee)
+            {
+                Email _PasswordConfirmationEmail = new Email()
+                {
+                    Recipient = newUser.Email,
+                    Subject = "Your Delivery Account - " + newUser.Forename,
+                    Body = "Welcome to your account " + newUser.Forename + " " + newUser.Surname + "\n"
+                        + "Your username to login is: " + newUser.UserName + "\n"
+                        + "Your temporary password is: " + _TempPassword + "\n\n"
+                        + "Please change this password as soon as possible!" + "\n\n"
+                        + "Thank you, Delivery+ Software Solutions"
+                };
+
+                __EmailController.SendEmail(_PasswordConfirmationEmail);
+            }
 
             newUser.Id = Guid.NewGuid().ToString();
             newUser.PasswordHash = __PasswordHasher.HashPassword(newUser, _TempPassword.ToString());

@@ -23,7 +23,7 @@ namespace DeliverySoftware.Business.Utilities
             return _SMTPClient;
         }
 
-        public void SendEmail (Email email)
+        public async Task SendEmail (Email email)
         {
             MailMessage _Email = new MailMessage(
                 SENDER_EMAIL,

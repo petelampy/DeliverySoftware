@@ -2,6 +2,6 @@
 {
     public interface IEmailController
     {
-        void SendEmail (Email email);
+        Task SendEmail (Email email);
     }
 }
