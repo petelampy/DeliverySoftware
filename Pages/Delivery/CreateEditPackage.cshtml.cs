@@ -1,6 +1,7 @@
 using DeliverySoftware.Business.Delivery;
 using DeliverySoftware.Business.Fleet;
 using DeliverySoftware.Business.Users;
+using DeliverySoftware.Business.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,6 +16,7 @@ namespace DeliverySoftware.Pages.Delivery
         private readonly IPackageController __PackageController;
         private readonly IDeliveryController __DeliveryController;
         private readonly IVanController __VanController;
+        private readonly IEmailController __EmailController;
 
 
         public CreateEditPackageModel ()
@@ -23,6 +25,7 @@ namespace DeliverySoftware.Pages.Delivery
             __PackageController = new PackageController();
             __DeliveryController = new DeliveryController();
             __VanController = new VanController();
+            __EmailController = new EmailController();
         }
 
         public IActionResult OnGet ()
@@ -93,6 +96,21 @@ namespace DeliverySoftware.Pages.Delivery
             else
             {
                 __PackageController.Create(Package);
+
+                DeliveryUser _Customer = __UserController.Get(Package.CustomerUID);
+
+                Email _CustomerNotification = new Email()
+                {
+                    Recipient = _Customer.Email,
+                    Subject = "Your Package is in the system!",
+                    Body = "Hi " + _Customer.Forename + ",\n\n"
+                                + "Your order of " + Package.Description + " is now in the system!\n\n"
+                                + "Your tracking code is: " + Package.TrackingCode + "\n\n"
+                                + "Keep an eye out for an email when the package is out for delivery!\n\n"
+                                + "Thanks, Delivery+ Software Solutions"
+                };
+
+                __EmailController.SendEmail(_CustomerNotification);
 
                 UpdatePackageCount(Package.DeliveryUID);
             }

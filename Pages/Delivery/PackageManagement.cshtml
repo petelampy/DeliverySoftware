@@ -22,9 +22,6 @@
                             Description
                         </th>
                         <th>
-                            Assigned to delivery?
-                        </th>
-                        <th>
                             Customer Ordered
                         </th>
                         <th>
@@ -38,7 +35,6 @@
                         <tr>
                             <td>@Package.TrackingCode</td>
                             <td>@Package.Description</td>
-                            <td>@Package.IsAssignedToDelivery</td>
                             <td>@Model.GetCustomerName(Package.CustomerUID)</td>
                             <td>@Package.Size</td>
                             <td><a class="btn btn-secondary" role="button" asp-page="CreateEditPackage" asp-route-UID="@Package.UID"></a></td>
