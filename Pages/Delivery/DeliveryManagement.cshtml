@@ -48,8 +48,6 @@
                                 {
                                     <a class="btn btn-secondary" role="button" asp-page="CreateEditDelivery" asp-route-UID="@Delivery.UID">Edit</a>
                                 }
-                            </td>
-                            <td>
                                 @if (Model.DoesDeliveryHavePackages(Delivery.UID))
                                 {
                                     <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="This delivery is in use, and can't be deleted!">

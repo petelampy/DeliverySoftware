@@ -37,8 +37,8 @@
                             <td>@Package.Description</td>
                             <td>@Model.GetCustomerName(Package.CustomerUID)</td>
                             <td>@Package.Size</td>
-                            <td><a class="btn btn-secondary" role="button" asp-page="CreateEditPackage" asp-route-UID="@Package.UID"></a></td>
                             <td>
+                                <a class="btn btn-secondary" role="button" asp-page="CreateEditPackage" asp-route-UID="@Package.UID">Edit</a>
                                 @if (Model.IsPackageOutForDelivery(Package.UID))
                                 {
                                     <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="This package is out for delivery, and can't be deleted!">

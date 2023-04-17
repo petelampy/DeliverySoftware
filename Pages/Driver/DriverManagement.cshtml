@@ -32,8 +32,8 @@
                             <td>@Driver.Forename  @Driver.Surname</td>
                             <td>@Driver.Email</td>
                             <td>@Model.GetDriverVanCount(new Guid(Driver.Id))</td>
-                            <td><a class="btn btn-secondary" role="button" asp-page="../User/CreateEditUser" asp-route-UID="@(new Guid(@Driver.Id))"></a></td>
                             <td>
+                                <a class="btn btn-secondary" role="button" asp-page="../User/CreateEditUser" asp-route-UID="@(new Guid(@Driver.Id))">Edit</a>
                                 @if (Model.GetDriverVanCount(new Guid(Driver.Id)) > 0)
                                 {
                                     <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="This driver is in use, and can't be deleted!">
