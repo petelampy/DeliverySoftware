@@ -16,3 +16,29 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+/*BOOTSTRAP THEME OVERRIDES*/
+
+:root {
+    --bs-primary: #6fb3b8;
+    --bs-secondary: #6c757d;
+    --bs-body-bg: #f6f6f2;
+}
+
+.btn-primary {
+    color: #000;
+    background-color: #6fb3b8;
+    border-color: #6fb3b8;
+}
+
+    .btn-primary:hover {
+        color: #000;
+        background-color: #388087;
+        border-color: #388087;
+    }
+
+.bg-card {
+    --bs-bg-opacity: 1;
+    background-color: #b3b3b3;
+}
