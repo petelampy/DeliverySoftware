@@ -13,11 +13,13 @@ namespace DeliverySoftware.Pages.Account
 
         private readonly SignInManager<DeliveryUser> __SignInManager;
         private readonly IPackageController __PackageController;
+        private readonly IUserController __UserController;
 
         public LoginModel (SignInManager<DeliveryUser> signInManager, UserManager<DeliveryUser> userManager)
         {
             __SignInManager = signInManager;
             __PackageController = new PackageController();
+            __UserController = new UserController();
         }
 
         public void OnGet()
