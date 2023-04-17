@@ -80,6 +80,15 @@ namespace DeliverySoftware.Pages.Delivery
 
         public IActionResult OnPost ()
         {
+            ValidateModel();
+
+            if (!ModelState.IsValid)
+            {
+                CreateCustomerSelector();
+                CreateDeliverySelector();
+                return Page();
+            }
+
             if (UID != null && UID != Guid.Empty)
             {
 
@@ -153,6 +162,37 @@ namespace DeliverySoftware.Pages.Delivery
                     Value = delivery.UID.ToString(),
                     Selected = Package.DeliveryUID.Equals(delivery.UID)
                 }).ToList();
+        }
+
+        private void ValidateModel()
+        {
+            Business.Delivery.Delivery _DeliveryRun = __DeliveryController.Get(Package.DeliveryUID);
+            List<Package> _PackagesOnDelivery = __PackageController.GetPackagesByDelivery(Package.DeliveryUID);
+            Van _SelectedVan = __VanController.Get(_DeliveryRun.VanUID);
+
+            int _SizeUsed = _PackagesOnDelivery.Sum(package => package.Size);
+
+            if (Package.UID == Guid.Empty)
+            {
+                if(Package.Size + _SizeUsed > _SelectedVan.Capacity)
+                {
+                    ModelState.AddModelError("Package.Size", "This package won't fit in the delivery van for this run!");
+                }
+            }
+            else
+            {
+                Package _CurrentPackage = __PackageController.Get(Package.UID);
+                
+                if(Package.Size + (_SizeUsed - _CurrentPackage.Size) > _SelectedVan.Capacity)
+                {
+                    ModelState.AddModelError("Package.Size", "This package won't fit in the delivery van for this run!");
+                }
+            }
+
+            if (Package.Size <= 0)
+            {
+                ModelState.AddModelError("Package.Size", "Invalid package size!");
+            }
         }
 
         [BindProperty(SupportsGet = true)]
