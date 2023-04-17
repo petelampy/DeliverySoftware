@@ -3,21 +3,46 @@
 @{
 }
 
-<div>
-    <p>Tracking Code: @Model.CurrentDrop.TrackingCode</p>
-    <p>Customer Name: @Model.CurrentStopCustomer.Forename @Model.CurrentStopCustomer.Surname</p>
-    <p>Delivery House Number: @Model.CurrentStopCustomer.HouseNumber</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5 m-auto bg-card rounded-3 border px-5 pb-3 pt-3 shadow-lg">
+            <div class="display-6 text-center mb-2">Delivery Drop Details</div>
+            <p>Customer Name: @Model.CurrentStopCustomer.Forename @Model.CurrentStopCustomer.Surname</p>
+            <p>House Number: @Model.CurrentStopCustomer.HouseNumber</p>
+        </div>
+        <div class="col-md-5 m-auto bg-card rounded-3 border px-5 pb-3 pt-3 shadow-lg">
+            <div class="display-6 text-center mb-2">Route Information</div>
+            <p>Drop Number @Model.CurrentDrop.DropNumber of @Model.GetTotalNumberOfDrops(Model.DeliveryRun.UID)</p>
+        </div>
+    </div>
 </div>
 
-<div>
-    <p>Drop Number: @Model.CurrentDrop.DropNumber of @Model.GetTotalNumberOfDrops(Model.DeliveryRun.UID)</p>
+<div class="row mt-3">
+    <div class="row">
+
+    </div>
+    <div class="col-lg-8 m-auto bg-card rounded-3 border px-3 pb-2 pt-2 shadow-lg">
+        <div class="row">
+            <div class="container" style="width: 100%; height: 100%">
+                <div id="routeMap" style="width: 55vw; height: 30vw;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 m-3 bg-card rounded-3 border px-5 pb-3 pt-3 shadow-lg">
+        <div class="row mt-5">
+            <div class="display-6 text-center mb-5">Driver Options</div>
+            <div class="col text-center">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="@("#signatureModal")">Take Signature</button>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col text-center">
+                <a class="btn btn-primary" role="button" asp-page-handler="completeDrop" asp-page="CurrentDelivery" asp-route-UID="@Model.DeliveryRunUID" asp-route-DropNumber="@Model.CurrentDrop.DropNumber">Safe Place Delivery (No Signature)</a>
+            </div>
+        </div>
+    </div>
 </div>
 
-
-<div id="routeMap" style="height: 400px; width: 600px;"></div>
-
-<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="@("#signatureModal")">Sign</button>
-<a class="btn btn-secondary" role="button" asp-page-handler="completeDrop" asp-page="CurrentDelivery" asp-route-UID="@Model.DeliveryRunUID" asp-route-DropNumber="@Model.CurrentDrop.DropNumber">Safe Place Delivery (No Signature)</a>
 
 <input type="hidden" id="dropPostCode" name="dropPostCode" asp-for="@Model.CurrentStopCustomer.PostCode" />
 <input type="hidden" id="dropHouseNumber" name="dropHouseNumber" asp-for="@Model.CurrentStopCustomer.HouseNumber" />
