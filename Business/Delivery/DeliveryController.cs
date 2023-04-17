@@ -26,6 +26,14 @@ namespace DeliverySoftware.Business.Delivery
                  .SingleOrDefault(new Delivery());
         }
 
+        public List<Delivery> GetByVan (Guid van_uid)
+        {
+            return __DbContext.Deliveries
+                 .AsEnumerable()
+                 .Where(delivery => delivery.VanUID == van_uid)
+                 .ToList();
+        }
+
         public List<Delivery> GetAll ()
         {
             return __DbContext.Deliveries.ToList();
