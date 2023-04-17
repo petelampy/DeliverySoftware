@@ -33,6 +33,7 @@ namespace DeliverySoftware.Pages.Customer
                 DeliveryUser _CurrentStopCustomer = __UserController.Get(_CurrentDelivery.CustomerUID);
                 DriverHouseNumber = _CurrentStopCustomer.HouseNumber.Value;
                 DriverPostCode = _CurrentStopCustomer.PostCode;
+                IsOutForDelivery = DeliveryRun.Status == DeliveryStatus.Started;
             }
             else
             {
@@ -55,5 +56,7 @@ namespace DeliverySoftware.Pages.Customer
         public int DriverHouseNumber { get; set; }
         [BindProperty(SupportsGet = true)]
         public string DriverPostCode { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public bool IsOutForDelivery { get; set; }
     }
 }

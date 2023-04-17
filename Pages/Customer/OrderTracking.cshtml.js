@@ -16,6 +16,8 @@ function loadMap() {
     var driverHouseNumber = document.getElementById('driverHouseNumber').value;
     var combinedDriverAddress = driverHouseNumber + " , " + driverPostCode;
 
+    var isOutForDelivery = document.getElementById('isOutForDelivery').value;
+
     map = new google.maps.Map(document.getElementById('trackingMap'), {
         zoom: 7,
         disableDefaultUI: true,
@@ -25,7 +27,10 @@ function loadMap() {
     directionsRenderer.setMap(map);
 
     createMapMarker(combinedCustomerAddress, "You", true, false);
-    createMapMarker(combinedDriverAddress, "Delivery Driver", false, true);
+
+    if (isOutForDelivery == 'True') {
+        createMapMarker(combinedDriverAddress, "Delivery Driver", false, true);
+    }
 }
 
 function createMapMarker(address, markerName, isCenter, isVan) {
