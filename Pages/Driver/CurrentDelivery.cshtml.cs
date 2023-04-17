@@ -32,6 +32,12 @@ namespace DeliverySoftware.Pages.Driver
                 {
                     DeliveryRun = __DeliveryController.Get(DeliveryRunUID);
 
+                    if(DeliveryRun.Status == DeliveryStatus.Pending)
+                    {
+                        DeliveryRun.Status = DeliveryStatus.Started;
+                        __DeliveryController.Update(DeliveryRun);
+                    }              
+
                     CurrentDrop = __PackageController
                         .GetByDeliveryAndDropNumber(DeliveryRun.UID, DeliveryRun.CurrentDrop);
 
@@ -53,6 +59,34 @@ namespace DeliverySoftware.Pages.Driver
         public int GetTotalNumberOfDrops(Guid delivery_uid)
         {
             return __PackageController.GetPackageCountByDelivery(delivery_uid);
+        }
+
+        public async Task<IActionResult> OnGetCompleteDrop (Guid uid, int dropNumber)
+        {
+            Package _CompletedDrop = __PackageController
+                .GetByDeliveryAndDropNumber(uid, dropNumber);
+
+            _CompletedDrop.IsDelivered = true;
+            __PackageController.Update(_CompletedDrop);
+
+            Business.Delivery.Delivery _CurrentDelivery = __DeliveryController.Get(uid);
+
+            int _PackageCount = __PackageController.GetPackageCountByDelivery(uid);
+
+            if(_CurrentDelivery.CurrentDrop + 1 > _PackageCount)
+            {
+                _CurrentDelivery.Status = DeliveryStatus.Completed;
+                __DeliveryController.Update(_CurrentDelivery);
+
+                return RedirectToPage("DeliveryRuns");
+            }
+            else
+            {
+                _CurrentDelivery.CurrentDrop += 1;
+                __DeliveryController.Update(_CurrentDelivery);
+
+                return RedirectToPage("CurrentDelivery", new { DeliveryRunUID = uid });
+            }
         }
 
 

@@ -4,7 +4,6 @@ using DeliverySoftware.Business.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using System.Security.Claims;
 
 namespace DeliverySoftware.Pages.Delivery
@@ -80,14 +79,36 @@ namespace DeliverySoftware.Pages.Delivery
         {
             if (UID != null && UID != Guid.Empty)
             {
+
+                Guid _CurrentDeliveryUID = __PackageController.Get(Package.UID).DeliveryUID;
+
                 __PackageController.Update(Package);
+
+                if (_CurrentDeliveryUID != Package.DeliveryUID)
+                {
+                    UpdatePackageCount(_CurrentDeliveryUID);
+                    UpdatePackageCount(Package.DeliveryUID);
+                }
             }
             else
             {
                 __PackageController.Create(Package);
+
+                UpdatePackageCount(Package.DeliveryUID);
             }
 
             return RedirectToPage("PackageManagement");
+        }
+
+        private void UpdatePackageCount(Guid delivery_uid)
+        {
+            int _NumberOfPackages = __PackageController.GetPackageCountByDelivery(delivery_uid);
+
+            Business.Delivery.Delivery _DeliveryRun = __DeliveryController.Get(delivery_uid);
+
+            _DeliveryRun.NumberOfPackages = _NumberOfPackages;
+
+            __DeliveryController.Update(_DeliveryRun);
         }
 
         private void CreateCustomerSelector ()

@@ -1,4 +1,5 @@
 ﻿@page
+@using DeliverySoftware.Business.Delivery;
 @model DeliverySoftware.Pages.Driver.DeliveryRunsModel
 @{
 }
@@ -33,7 +34,16 @@
                             <td>@DeliveryRun.Id</td>
                             <td>@DeliveryRun.NumberOfPackages</td>
                             <td>@DeliveryRun.Status</td>
-                            <td><a class="btn btn-primary" role="button" asp-page="CurrentDelivery" asp-route-DeliveryRunUID="@DeliveryRun.UID">Start Delivery Run</a></td>
+                            <td>
+                                @if(DeliveryRun.Status == DeliveryStatus.Started)
+                                {
+                                    <a class="btn btn-primary" role="button" asp-page="CurrentDelivery" asp-route-DeliveryRunUID="@DeliveryRun.UID">Continue Delivery Run</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-primary" role="button" asp-page="CurrentDelivery" asp-route-DeliveryRunUID="@DeliveryRun.UID">Start Delivery Run</a>
+                                }
+                            </td>
                         </tr>
                     }
                     </tbody>

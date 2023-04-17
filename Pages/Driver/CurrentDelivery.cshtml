@@ -16,8 +16,40 @@
 
 <div id="routeMap" style="height: 400px; width: 600px;"></div>
 
+<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="@("#signatureModal")">Sign</button>
+<a class="btn btn-secondary" role="button" asp-page-handler="completeDrop" asp-page="CurrentDelivery" asp-route-UID="@Model.DeliveryRunUID" asp-route-DropNumber="@Model.CurrentDrop.DropNumber">Safe Place Delivery (No Signature)</a>
+
 <input type="hidden" id="dropPostCode" name="dropPostCode" asp-for="@Model.CurrentStopCustomer.PostCode" />
 <input type="hidden" id="dropHouseNumber" name="dropHouseNumber" asp-for="@Model.CurrentStopCustomer.HouseNumber" />
+
+
+
+@*Modal for taking signature*@
+<div class="modal fade" id="@("signatureModal")" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Sign for Package</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                  <div class="mb-3">
+                      <label for="customer-signature" class="col-form-label">Signature:</label>
+                      <input type="text" class="form-control" id="customer-signature">
+                  </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-lg" role="button" asp-page-handler="completeDrop" asp-page="CurrentDelivery" asp-route-UID="@Model.DeliveryRunUID" asp-route-DropNumber="@Model.CurrentDrop.DropNumber">Sign</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section Scripts {
     <script type="text/javascript" src="~/Pages/Driver/CurrentDelivery.cshtml.js"></script>
