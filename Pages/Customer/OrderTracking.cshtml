@@ -5,19 +5,58 @@
 }
 
 
-<div>
-    <p>Tracking Code: @Model.TrackingCode</p>
-    <p>Customer Name: @Model.Customer.Forename @Model.Customer.Surname</p>
+<div class="row">
+    <div class="col-md-5 m-auto bg-card rounded-3 border px-5 pb-3 pt-3 shadow-lg">
+        <div class="display-6 text-center mb-2">Order - @Model.TrackingCode</div>
+        <div>@Model.Customer.Forename @Model.Customer.Surname</div>
+        <div>@Model.Customer.Address</div>
+    </div> 
+    <div class="col-md-3 m-auto bg-card rounded-3 border px-5 pb-3 pt-3 shadow-lg">
+        <div class="display-6 text-center mb-3">Order Status</div>
+
+        @if(Model.DeliveryRun.Status == DeliveryStatus.Pending)
+        {
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="text-center fw-bold">At the depot</div>
+        }
+        @if (Model.DeliveryRun.Status == DeliveryStatus.Started)
+        {
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="text-center fw-bold">Out For Delivery</div>
+        }
+        @if (Model.DeliveryRun.Status == DeliveryStatus.Completed)
+        {
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="text-center fw-bold">Delivered</div>
+        }
+        
+        @if(Model.DeliveryRun.Status == DeliveryStatus.Started)
+        {
+            @if ((Model.Package.DropNumber - Model.DeliveryRun.CurrentDrop) > 0)
+            {
+                <div class="text-center mt-3">Your Package is @(Model.Package.DropNumber - Model.DeliveryRun.CurrentDrop) drops away</div>
+            }
+            else
+            {
+                <div class="text-center mt-3">You're the next drop!</div>
+            }
+        }
+
+    </div>
 </div>
 
-<div>
-    <p>Package Status: @(Model.DeliveryRun.Status == DeliveryStatus.Completed ? "Delivered" : "On the way")</p>
-    <p>Your Package is: @(Model.Package.DropNumber - Model.DeliveryRun.CurrentDrop) drops away</p>
-</div>
-
-<div>
-    <p>Delivery Address: @Model.Customer.Address</p>
-    <p>Delivery PostCode: @Model.Customer.PostCode</p>
+<div class="row mt-3">
+    <div class="col-lg-10 m-auto bg-card rounded-3 border px-1 pb-2 pt-2 shadow-lg">
+        <div class="container" style="width: 100%; height: 100%">
+            <div id="trackingMap" style="width: 68vw; height: 30vw"></div>
+        </div>
+    </div>
 </div>
 
 <input type="hidden" id="customerPostCode" name="customerPostCode" asp-for="@Model.Customer.PostCode" />
@@ -25,7 +64,6 @@
 <input type="hidden" id="driverPostCode" name="driverPostCode" asp-for="@Model.DriverHouseNumber" />
 <input type="hidden" id="driverHouseNumber" name="driverHouseNumber" asp-for="@Model.DriverPostCode" />
 <input type="hidden" id="isOutForDelivery" name="isOutForDelivery" asp-for="@Model.IsOutForDelivery" />
-<div id="trackingMap" style="height: 400px; width: 600px;"></div>
 
 @section Scripts {
     <script type="text/javascript" src="~/Pages/Customer/OrderTracking.cshtml.js"></script>

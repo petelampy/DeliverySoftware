@@ -42,3 +42,18 @@ body {
     --bs-bg-opacity: 1;
     background-color: #b3b3b3;
 }
+
+.progress {
+    background-color: #c2edce;
+}
+
+.progress-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    color: #c2edce;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #6fb3b8;
+    transition: width 0.6s ease;
