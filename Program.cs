@@ -23,10 +23,11 @@ var _App = _Builder.Build();
 // Configure the HTTP request pipeline.
 if (!_App.Environment.IsDevelopment())
 {
-    _App.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     _App.UseHsts();
 }
+
+_App.UseExceptionHandler("/Error");
 
 _App.UseHttpsRedirection();
 _App.UseStaticFiles();
