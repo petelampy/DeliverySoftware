@@ -76,6 +76,15 @@ namespace DeliverySoftware.Business.Delivery
                .Count();
         }
 
+        public int GetActivePackagesByCustomer (Guid customer_uid)
+        {
+            return __DbContext
+               .Packages
+               .AsEnumerable()
+               .Where(package => package.CustomerUID == customer_uid && package.IsDelivered == false)
+               .Count();
+        }
+
         public void Create (Package newPackage)
         {
             newPackage.UID = Guid.NewGuid();

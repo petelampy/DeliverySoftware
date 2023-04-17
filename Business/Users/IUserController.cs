@@ -3,6 +3,7 @@
     public interface IUserController
     {
         void Create (DeliveryUser newUser);
+        void Delete (Guid uid);
         DeliveryUser Get (Guid uid);
         List<DeliveryUser> GetAll ();
         List<DeliveryUser> GetAllCustomers ();

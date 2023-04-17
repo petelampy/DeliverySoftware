@@ -1,4 +1,5 @@
-﻿using DeliverySoftware.Database;
+﻿using DeliverySoftware.Business.Fleet;
+using DeliverySoftware.Database;
 using Microsoft.AspNetCore.Identity;
 
 namespace DeliverySoftware.Business.Users
@@ -113,6 +114,14 @@ namespace DeliverySoftware.Business.Users
             _CurrentUser.Email = updatedUser.Email;
             _CurrentUser.NormalizedEmail = updatedUser.Email.ToUpper();
 
+            __DbContext.SaveChanges();
+        }
+
+        public void Delete (Guid uid)
+        {
+            DeliveryUser _User = Get(uid);
+
+            __DbContext.Remove(_User);
             __DbContext.SaveChanges();
         }
     }
