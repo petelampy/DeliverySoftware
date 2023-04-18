@@ -44,7 +44,7 @@
                             <td>@Van.Capacity</td>
                             <td>@Model.GetActiveDeliveries(Van.UID)</td>
                             <td>
-                                <a class="btn btn-secondary" role="button" asp-page="CreateEditVan" asp-route-UID="@Van.UID">Edit</a>
+                                <a class="btn btn-primary" role="button" asp-page="CreateEditVan" asp-route-UID="@Van.UID">Edit</a>
                                 @if (Model.GetActiveDeliveries(Van.UID) > 0)
                                 {
                                     <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="This van is in use, and can't be deleted!">

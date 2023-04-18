@@ -42,12 +42,12 @@
                                 @if (Delivery.Status == DeliveryStatus.Started)
                                 {
                                     <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="This delivery has begun, and can't be edited!">
-                                        <button class="btn btn-secondary" role="button" disabled>Edit</button>
+                                        <button class="btn btn-primary" role="button" disabled>Edit</button>
                                     </span>
                                 }
                                 else
                                 {
-                                    <a class="btn btn-secondary" role="button" asp-page="CreateEditDelivery" asp-route-UID="@Delivery.UID">Edit</a>
+                                    <a class="btn btn-primary" role="button" asp-page="CreateEditDelivery" asp-route-UID="@Delivery.UID">Edit</a>
                                 }
                                 @if (Model.DoesDeliveryHavePackages(Delivery.UID))
                                 {

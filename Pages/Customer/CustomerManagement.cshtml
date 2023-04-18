@@ -39,7 +39,7 @@
                             <td>@Customer.Address</td>
                             <td>@Customer.PostCode</td>
                             <td>
-                                <a class="btn btn-secondary" role="button" asp-page="../User/CreateEditUser" asp-route-UID="@(new Guid(@Customer.Id))">Edit</a>
+                                <a class="btn btn-primary" role="button" asp-page="../User/CreateEditUser" asp-route-UID="@(new Guid(@Customer.Id))">Edit</a>
                                 @if (Model.DoesCustomerHaveUndeliveredPackages(new Guid(Customer.Id)))
                                 {
                                     <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="This customer is in use, and can't be deleted!">
