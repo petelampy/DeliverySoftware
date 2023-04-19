@@ -9,6 +9,8 @@ namespace DeliverySoftware.Business.Utilities
         private const string SENDER_EMAIL = "deliverysoftware@lampard.dev";
         private const string SENDER_PASS = "37067182";
 
+        public EmailController() { }
+
         private SmtpClient CreateSMTPClient ()
         {
             SmtpClient _SMTPClient = new SmtpClient

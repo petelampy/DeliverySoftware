@@ -13,7 +13,7 @@ namespace DeliverySoftware.Business.Fleet
             this(new DBContextManager())
         { }
 
-        internal VanController (IDBContextManager dbContextManager)
+        public VanController (IDBContextManager dbContextManager)
         {
             __DbContextManager = dbContextManager;
             __DbContext = __DbContextManager.CreateNewDatabaseContext();

@@ -12,7 +12,7 @@ namespace DeliverySoftware.Business.Delivery
             this(new DBContextManager())
         { }
 
-        internal DeliveryController (IDBContextManager dbContextManager)
+        public DeliveryController (IDBContextManager dbContextManager)
         {
             __DbContextManager = dbContextManager;
             __DbContext = __DbContextManager.CreateNewDatabaseContext();

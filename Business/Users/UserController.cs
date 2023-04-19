@@ -16,7 +16,7 @@ namespace DeliverySoftware.Business.Users
             this(new DBContextManager(), new PasswordHasher<DeliveryUser>(), new EmailController())
         { }
 
-        internal UserController (IDBContextManager dbContextManager, IPasswordHasher<DeliveryUser> passwordHasher, IEmailController emailController)
+        public UserController (IDBContextManager dbContextManager, IPasswordHasher<DeliveryUser> passwordHasher, IEmailController emailController)
         {
             __DbContextManager = dbContextManager;
             __DbContext = __DbContextManager.CreateNewDatabaseContext();
