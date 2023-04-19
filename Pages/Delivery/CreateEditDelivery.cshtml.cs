@@ -4,6 +4,7 @@ using DeliverySoftware.Business.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Identity.Client;
 using System.Security.Claims;
 
 namespace DeliverySoftware.Pages.Delivery
@@ -37,6 +38,7 @@ namespace DeliverySoftware.Pages.Delivery
                 else
                 {
                     DeliveryRun = new Business.Delivery.Delivery();
+                    DeliveryRun.Date = DateTime.Now.Date;
                 }
 
                 CreateVanSelector();
@@ -65,6 +67,14 @@ namespace DeliverySoftware.Pages.Delivery
 
         public IActionResult OnPost ()
         {
+            ValidateModel();
+
+            if (!ModelState.IsValid)
+            {
+                CreateVanSelector();
+                return Page();
+            }
+
             if (UID != null && UID != Guid.Empty)
             {
                 __DeliveryController.Update(DeliveryRun);
@@ -75,6 +85,28 @@ namespace DeliverySoftware.Pages.Delivery
             }
 
             return RedirectToPage("DeliveryManagement");
+        }
+
+        private void ValidateModel()
+        {
+
+            if(DeliveryRun.UID == Guid.Empty)
+            {
+                if (DeliveryRun.Date < DateTime.Now)
+                {
+                    ModelState.AddModelError("DeliveryRun.Date", "Can't create a delivery in the past!");
+                }
+            }
+            else
+            {
+                Business.Delivery.Delivery _CurrentDelivery = __DeliveryController.Get(DeliveryRun.UID);
+
+                if (_CurrentDelivery.Date != DeliveryRun.Date && DeliveryRun.Date < DateTime.Now)
+                {
+                    ModelState.AddModelError("DeliveryRun.Date", "Can't change a delivery date to the past!");
+                }
+            }
+            
         }
 
         [BindProperty(SupportsGet = true)]

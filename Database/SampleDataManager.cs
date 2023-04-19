@@ -24,7 +24,8 @@ namespace DeliverySoftware.Database
                 NumberOfPackages = 1,
                 VanUID = __SampleVanUID,
                 Status = DeliveryStatus.Pending,
-                CurrentDrop = 1
+                CurrentDrop = 1,
+                Date = DateTime.Now
             };
         }
 

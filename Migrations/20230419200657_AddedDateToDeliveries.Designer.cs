@@ -4,6 +4,7 @@ using DeliverySoftware.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DeliverySoftware.Migrations
 {
     [DbContext(typeof(DeliveryDBContext))]
-    partial class DeliveryDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230419200657_AddedDateToDeliveries")]
+    partial class AddedDateToDeliveries
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,7 +60,7 @@ namespace DeliverySoftware.Migrations
                         {
                             Id = 1,
                             CurrentDrop = 1,
-                            Date = new DateTime(2023, 4, 19, 21, 7, 38, 942, DateTimeKind.Local).AddTicks(4699),
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NumberOfPackages = 1,
                             Status = 1,
                             UID = new Guid("3f3cf1cd-131d-4d05-93b9-21dbd082fcac"),
@@ -118,7 +121,7 @@ namespace DeliverySoftware.Migrations
                             IsDelivered = false,
                             Size = 10,
                             TrackingCode = "TESTPKG666",
-                            UID = new Guid("0809ccb1-61f2-4ccc-9296-b24f6b138803")
+                            UID = new Guid("ca16ba14-4709-4ad1-8e58-398bbfc6c5a8")
                         },
                         new
                         {
@@ -261,7 +264,7 @@ namespace DeliverySoftware.Migrations
                             Id = "751e25c8-68ba-49dc-b1de-15fcb0bf210f",
                             AccessFailedCount = 0,
                             Address = "306 Sinfin Avenue, Derby, UK",
-                            ConcurrencyStamp = "0c22d31d-3ee4-4879-9783-9857d4e9e030",
+                            ConcurrencyStamp = "8ae561fd-097a-40f1-b50a-8ff5991283d2",
                             Email = "petelampy@gmail.com",
                             EmailConfirmed = true,
                             Forename = "Annika",
@@ -269,10 +272,10 @@ namespace DeliverySoftware.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PETELAMPY@GMAIL.COM",
                             NormalizedUserName = "CUSTOMERLOGON",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJiR++CyYvTwlQmVeYFxnVN8wQ5Qps82ShVyO+2RPwFZO+owWUAhUF1kmoeeItxCJw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEO1q1uAQjDojgvDFpLRhoWkiBhob08cLnZxNIPtdHMmmjhaTHfiJWF2bhqT1LvLqZg==",
                             PhoneNumberConfirmed = false,
                             PostCode = "DE24 9QX",
-                            SecurityStamp = "ffc3f231-28cb-418e-abff-f697ec0bad34",
+                            SecurityStamp = "9101752d-2ccf-417e-a68f-e981881a3d8c",
                             Surname = "Hansen",
                             TwoFactorEnabled = false,
                             UserName = "customerlogon",
@@ -283,7 +286,7 @@ namespace DeliverySoftware.Migrations
                             Id = "52fac4db-3d93-46bc-81ef-f33aed467669",
                             AccessFailedCount = 0,
                             Address = "3 Bond End, Monks Kirby, Rugby, UK",
-                            ConcurrencyStamp = "aca93244-a896-4dba-b98b-a3ed0fe9a40a",
+                            ConcurrencyStamp = "b9267654-cdcb-4fbb-ba69-f415a8e756b0",
                             Email = "petelampy@gmail.com",
                             EmailConfirmed = true,
                             Forename = "Amos",
@@ -291,10 +294,10 @@ namespace DeliverySoftware.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PETELAMPY@GMAIL.COM",
                             NormalizedUserName = "CUSTOMERLOGON2",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFBO3OjDAGk0SRerZZU6d2F0SDH/MaFTXhYG51U35lZloko73FzhWxmvYAucigLsBA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEK9zBNbYFJSQKmEjSlCd19b1Kb6jspOiFu/5KrSmijMDmqLZV8dIZFB57PdQxyxDGA==",
                             PhoneNumberConfirmed = false,
                             PostCode = "CV23 0RD",
-                            SecurityStamp = "ae2960ac-d6e4-4f20-a436-0132d733b06a",
+                            SecurityStamp = "151c723c-adae-4a92-b480-8810989c8a63",
                             Surname = "Burton",
                             TwoFactorEnabled = false,
                             UserName = "customerlogon2",
@@ -304,16 +307,16 @@ namespace DeliverySoftware.Migrations
                         {
                             Id = "16776aef-a5ff-424d-be7e-ea3fd591ce90",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b0778bac-54bc-4acf-8a8d-bbda4f030269",
+                            ConcurrencyStamp = "d3929b31-b685-44bf-ac71-98e5e3c55d06",
                             Email = "petelampy@gmail.com",
                             EmailConfirmed = true,
                             Forename = "Din",
                             LockoutEnabled = false,
                             NormalizedEmail = "PETELAMPY@GMAIL.COM",
                             NormalizedUserName = "DRIVERLOGON",
-                            PasswordHash = "AQAAAAIAAYagAAAAEM2URZ1uWsnzu7wEbH2T3lhaO3Eb8oIoDyO1viPwJ4sumuZz5M5SDiWMKvZ5HFVsdA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBpRjXR9+DWnANyKMEjx09ihiKlLPPM45pJECx40l/9/no9iq4nKl/fbrsmgmliLlg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "23ba4aea-287b-412a-8b0b-283d4faf994f",
+                            SecurityStamp = "f1382060-af81-462b-aa95-9f9f3f9e62bb",
                             Surname = "Djarin",
                             TwoFactorEnabled = false,
                             UserName = "driverlogon",
@@ -323,16 +326,16 @@ namespace DeliverySoftware.Migrations
                         {
                             Id = "ca6f5584-527f-4820-802f-bd329352c3e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5fe5a4cf-421c-4684-b7c6-ddeaae02dcea",
+                            ConcurrencyStamp = "c3f2457f-7b03-48fd-a7d4-0ae19d961a7e",
                             Email = "petelampy@gmail.com",
                             EmailConfirmed = true,
                             Forename = "William",
                             LockoutEnabled = false,
                             NormalizedEmail = "PETELAMPY@GMAIL.COM",
                             NormalizedUserName = "EMPLOYEELOGON",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDpaYaSuIjf2PP+zu5lAArK2jvRINyx3V/5sVst4C+ziInM4FrTE4fPA/ovMNlBJCA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJhDrvQdbWqnWLcJlcaIHpFgWUxmEb0/Y+AJNBOQgAn1kETGdk3dJwBUOCzcnyjNGQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b2bc1712-c6f0-4729-8165-4e38bf51b294",
+                            SecurityStamp = "5b52ffb3-831c-4984-b7ba-952836cdc2c3",
                             Surname = "Riker",
                             TwoFactorEnabled = false,
                             UserName = "employeelogon",

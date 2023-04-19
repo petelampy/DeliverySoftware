@@ -4,6 +4,7 @@ using DeliverySoftware.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DeliverySoftware.Migrations
 {
     [DbContext(typeof(DeliveryDBContext))]
-    partial class DeliveryDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230419200739_AddedDateToDeliveries2")]
+    partial class AddedDateToDeliveries2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

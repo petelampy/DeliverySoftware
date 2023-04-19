@@ -27,7 +27,11 @@ namespace DeliverySoftware.Pages.Driver
 
             if (_CurrentUser.UserType == UserType.Driver)
             {
-                DeliveryRuns = __DeliveryController.GetAllAvailable();
+                DeliveryRuns = __DeliveryController
+                    .GetAllAvailable()
+                    .Where(deliveryRun => deliveryRun.NumberOfPackages > 0)
+                    .ToList();
+
                 return Page();
             }
             else

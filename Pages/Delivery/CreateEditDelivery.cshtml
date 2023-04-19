@@ -13,6 +13,15 @@
         <h1 class="display-5 mb-3 text-center">Create Delivery</h1>
     }
     <form method="post" novalidate>
+
+        <div>
+            <label asp-for="@Model.DeliveryRun.Date">Delivery Date</label>
+            <div class="col-sm-12">
+                <input class="form-control" asp-for="@Model.DeliveryRun.Date">
+            </div>
+            <span class="text-danger" asp-validation-for="@Model.DeliveryRun.Date"></span>
+        </div>
+
         @if (Model.UID != Guid.Empty)
         {
             <div>

@@ -8,8 +8,9 @@
 <div class="row mt-3">
     <div class="col-md-5 m-auto bg-card rounded-3 border px-5 pb-3 pt-3 shadow-lg">
         <div class="display-6 text-center mb-2">Order - @Model.TrackingCode</div>
-        <div>@Model.Customer.Forename @Model.Customer.Surname</div>
-        <div>@Model.Customer.Address</div>
+        <div>Delivery Date: @Model.DeliveryRun.Date.Date.ToShortDateString()</div>
+        <div>Name: @Model.Customer.Forename @Model.Customer.Surname</div>
+        <div>Delivery Address: @Model.Customer.Address</div>
     </div> 
     <div class="col-md-3 m-auto bg-card rounded-3 border px-5 pb-3 pt-3 shadow-lg">
         <div class="display-6 text-center mb-3">Order Status</div>

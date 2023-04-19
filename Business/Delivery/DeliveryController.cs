@@ -44,7 +44,7 @@ namespace DeliverySoftware.Business.Delivery
             return __DbContext
                 .Deliveries
                 .AsEnumerable()
-                .Where(delivery => delivery.Status != DeliveryStatus.Completed && delivery.NumberOfPackages > 0)
+                .Where(delivery => delivery.Status != DeliveryStatus.Completed)
                 .ToList();
         }
 
@@ -85,6 +85,7 @@ namespace DeliverySoftware.Business.Delivery
             _CurrentDelivery.Status = updatedDelivery.Status;
             _CurrentDelivery.CurrentDrop = updatedDelivery.CurrentDrop;
             _CurrentDelivery.VanUID = updatedDelivery.VanUID;
+            _CurrentDelivery.Date = updatedDelivery.Date;
 
             __DbContext.SaveChanges();
         }
