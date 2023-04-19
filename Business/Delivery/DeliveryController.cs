@@ -44,7 +44,7 @@ namespace DeliverySoftware.Business.Delivery
             return __DbContext
                 .Deliveries
                 .AsEnumerable()
-                .Where(delivery => delivery.Status != DeliveryStatus.Completed)
+                .Where(delivery => delivery.Status != DeliveryStatus.Completed && delivery.NumberOfPackages > 0)
                 .ToList();
         }
 
