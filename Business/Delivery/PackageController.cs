@@ -122,6 +122,7 @@ namespace DeliverySoftware.Business.Delivery
             {
                 _CurrentPackage.IsAssignedToDelivery = true;
                 _CurrentPackage.DropNumber = GetPackageCountByDelivery(_CurrentPackage.DeliveryUID) + 1;
+                _CurrentPackage.DeliveryUID = updatedPackage.DeliveryUID;
             }
 
             __DbContext.SaveChanges();
