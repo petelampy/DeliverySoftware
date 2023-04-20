@@ -69,7 +69,7 @@ namespace DeliverySoftware.Business.Delivery
         public void Create (Delivery newDelivery)
         {
             newDelivery.UID = Guid.NewGuid();
-            newDelivery.CurrentDrop = 0;
+            newDelivery.CurrentDrop = 1;
             newDelivery.Status = DeliveryStatus.Pending;
             newDelivery.NumberOfPackages = 0;
 

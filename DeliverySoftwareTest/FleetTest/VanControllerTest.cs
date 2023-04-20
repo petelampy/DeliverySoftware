@@ -27,7 +27,8 @@ namespace DeliverySoftwareTest.FleetTest
                 Id = 1,
                 Capacity = 30,
                 Registration = "VN69 UGB",
-                DriverUID = Guid.NewGuid()
+                DriverUID = Guid.NewGuid(),
+                DepotPostCode = "DE24 9QX"
             };
 
             _VanController.Create(_Van);
@@ -68,7 +69,8 @@ namespace DeliverySoftwareTest.FleetTest
                 UID = _MockVanUID,
                 Capacity = 15,
                 DriverUID = Guid.NewGuid(),
-                Registration = "WK04 DHC"
+                Registration = "WK04 DHC",
+                DepotPostCode = "DE24 9QX"
             });
 
             _MockDBContext.Add(new Van
@@ -77,7 +79,8 @@ namespace DeliverySoftwareTest.FleetTest
                 UID = Guid.NewGuid(),
                 Capacity = 25,
                 DriverUID = Guid.NewGuid(),
-                Registration = "DL60 HBB"
+                Registration = "DL60 HBB",
+                DepotPostCode = "DE24 9QX"
             });
             _MockDBContext.SaveChanges();
 
@@ -119,13 +122,15 @@ namespace DeliverySoftwareTest.FleetTest
                 UID = _MockVanUID,
                 Capacity = 12,
                 DriverUID = Guid.NewGuid(),
-                Registration = "L444 MPD"
+                Registration = "L444 MPD",
+                DepotPostCode = "DE24 9QX"
             };
 
             _MockDBContext.Vans.Add(_MockVan);
             _MockDBContext.Add(new Van()
             {
-                Registration = "WK04 DHC"
+                Registration = "WK04 DHC",
+                DepotPostCode = "DE24 9QX"
             });
             _MockDBContext.SaveChanges();
 
@@ -162,21 +167,24 @@ namespace DeliverySoftwareTest.FleetTest
                 UID = Guid.NewGuid(),
                 DriverUID = _MockDriverUID,
                 Capacity = 5,
-                Registration = "WK04 DHC"
+                Registration = "WK04 DHC",
+                DepotPostCode = "DE24 9QX"
             },
             new Van
             {
                 UID = Guid.NewGuid(),
                 DriverUID = _MockDriverUID,
                 Capacity = 12,
-                Registration = "DL60 HBB"
+                Registration = "DL60 HBB",
+                DepotPostCode = "DE24 9QX"
             },
             new Van
             {
                 UID = Guid.NewGuid(),
                 DriverUID = Guid.NewGuid(),
                 Capacity = 24,
-                Registration = "L444 MPD"
+                Registration = "L444 MPD",
+                DepotPostCode = "DE24 9QX"
             });
             _MockDBContext.SaveChanges();
 
@@ -211,13 +219,15 @@ namespace DeliverySoftwareTest.FleetTest
                 UID = _MockVanUID,
                 Capacity = 12,
                 DriverUID = Guid.NewGuid(),
-                Registration = "L444 MPD"
+                Registration = "L444 MPD",
+                DepotPostCode = "DE24 9QX"
             };
 
             _MockDBContext.Vans.Add(_MockVan);
             _MockDBContext.Add(new Van()
             {
-                Registration = "WK04 DHC"
+                Registration = "WK04 DHC",
+                DepotPostCode = "DE24 9QX"
             });
             _MockDBContext.SaveChanges();
 
@@ -251,7 +261,8 @@ namespace DeliverySoftwareTest.FleetTest
                 Id = 3,
                 UID = _MockVanUID,
                 Capacity = 12,
-                Registration = "L444 MPD"
+                Registration = "L444 MPD",
+                DepotPostCode = "DE24 9QX"
             });
             _MockDBContext.SaveChanges();
 
@@ -259,7 +270,8 @@ namespace DeliverySoftwareTest.FleetTest
             {
                 UID = _MockVanUID,
                 Capacity = 55,
-                Registration = "HS53 NEJ"
+                Registration = "HS53 NEJ",
+                DepotPostCode = "DE24 9QX"
             };
 
             _VanController.Update(_UpdatedVan);

@@ -35,16 +35,12 @@ namespace DeliverySoftware.Pages.Driver
                 {
                     DeliveryRun = __DeliveryController.Get(DeliveryRunUID);
 
-                    CurrentDrop = __PackageController
-                        .GetByDeliveryAndDropNumber(DeliveryRun.UID, DeliveryRun.CurrentDrop);
-
-                    CurrentStopCustomer = __UserController.Get(CurrentDrop.CustomerUID);
-
                     if (DeliveryRun.Status == DeliveryStatus.Pending)
                     {
                         DeliveryRun.Status = DeliveryStatus.Started;
                         __DeliveryController.Update(DeliveryRun);
 
+                        __PackageController.UpdateDeliveryRunDropOrder(DeliveryRunUID);
 
                         List<Package> _Packages = __PackageController.GetPackagesByDelivery(DeliveryRunUID);
 
@@ -72,7 +68,12 @@ namespace DeliverySoftware.Pages.Driver
 
                             __EmailController.SendEmail(_CustomerNotification);
                         }
-                    }              
+                    }
+
+                    CurrentDrop = __PackageController
+                       .GetByDeliveryAndDropNumber(DeliveryRun.UID, DeliveryRun.CurrentDrop);
+
+                    CurrentStopCustomer = __UserController.Get(CurrentDrop.CustomerUID);
                 }
                 else
                 {

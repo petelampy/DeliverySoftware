@@ -14,5 +14,6 @@
         int GetPackageCountByDelivery (Guid delivery_uid);
         List<Package> GetPackagesByDelivery (Guid delivery_uid);
         void Update (Package updatedPackage);
+        void UpdateDeliveryRunDropOrder (Guid delivery_uid);
     }
 }

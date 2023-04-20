@@ -29,6 +29,7 @@
 	</ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="GoogleApi" Version="4.5.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.5" />

@@ -140,7 +140,8 @@ namespace DeliverySoftware.Database
                 UID = __SampleVanUID,
                 Capacity = 50,
                 DriverUID = __SampleDriverUID,
-                Registration = "WK04 DHC"
+                Registration = "WK04 DHC",
+                DepotPostCode = "DE24 9QX"
             };
         }
     }

@@ -38,7 +38,7 @@ namespace DeliverySoftwareTest.DeliveryTest
 
             Assert.AreEqual(_Delivery.Id, _Result.Id);
             Assert.AreEqual(DeliveryStatus.Pending, _Result.Status);
-            Assert.AreEqual(0, _Result.CurrentDrop);
+            Assert.AreEqual(1, _Result.CurrentDrop);
             Assert.AreEqual(0, _Result.NumberOfPackages);
             Assert.AreEqual(_Delivery.VanUID, _Result.VanUID);
 

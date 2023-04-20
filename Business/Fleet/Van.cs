@@ -3,6 +3,7 @@
     public class Van
     {
         public int Capacity { get; set; }
+        public string DepotPostCode { get; set; }
         public Guid? DriverUID { get; set; }
         public int Id { get; set; }
         public string Registration { get; set; }

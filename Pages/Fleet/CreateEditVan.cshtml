@@ -34,6 +34,13 @@
                 <select class="form-select" asp-for="@Model.Van.DriverUID" asp-items="@Model.DriverSelection">Driver</select>
             </div>
         </div>
+        <div>
+            <label asp-for="@Model.Van.DepotPostCode">Depot Post Code</label>
+            <div class="col-sm-12">
+                <input class="form-control" asp-for="@Model.Van.DepotPostCode">
+            </div>
+            <span class="text-danger" asp-validation-for="@Model.Van.DepotPostCode"></span>
+        </div>
 
         <input type="hidden" asp-for="@Model.Van.Id" />
         <input type="hidden" asp-for="@Model.Van.UID" />

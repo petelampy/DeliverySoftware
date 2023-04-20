@@ -1,4 +1,6 @@
 ﻿using DeliverySoftware.Business.Delivery;
+using DeliverySoftware.Business.Fleet;
+using DeliverySoftware.Business.Users;
 using DeliverySoftware.Database;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -25,7 +27,12 @@ namespace DeliverySoftwareTest.DeliveryTest
 
             _MockContextManager.Setup(mock => mock.CreateNewDatabaseContext()).Returns(_MockDBContext);
 
-            IPackageController _PackageController = new PackageController(_MockContextManager.Object);
+            Mock<IUserController> _MockUserController = new Mock<IUserController>();
+            Mock<IVanController> _MockVanController = new Mock<IVanController>();
+            Mock<IDeliveryController> _MockDeliveryController = new Mock<IDeliveryController>();
+
+            IPackageController _PackageController = new PackageController(_MockContextManager.Object, _MockUserController.Object,
+                _MockVanController.Object, _MockDeliveryController.Object);
 
             Package _Package = new Package
             {
@@ -33,8 +40,7 @@ namespace DeliverySoftwareTest.DeliveryTest
                 CustomerUID = Guid.NewGuid(),
                 Description = "test package",
                 Size = 20,
-                TrackingCode = "TESTTRACK123",
-                DeliveryUID = Guid.NewGuid()
+                TrackingCode = "TESTTRACK123"
             };
 
             _PackageController.Create(_Package);
@@ -49,8 +55,8 @@ namespace DeliverySoftwareTest.DeliveryTest
             Assert.AreEqual(_Package.Description, _Result.Description);
             Assert.AreEqual(_Package.TrackingCode, _Result.TrackingCode);
 
-            Assert.AreEqual(1, _Result.DropNumber);
-            Assert.IsTrue(_Result.IsAssignedToDelivery);
+            Assert.AreEqual(0, _Result.DropNumber);
+            Assert.IsFalse(_Result.IsAssignedToDelivery);
             Assert.IsFalse(_Result.IsDelivered);
 
             _MockContextManager.Verify(mock => mock.CreateNewDatabaseContext(), Times.Once());
@@ -70,7 +76,12 @@ namespace DeliverySoftwareTest.DeliveryTest
 
             _MockContextManager.Setup(mock => mock.CreateNewDatabaseContext()).Returns(_MockDBContext);
 
-            IPackageController _PackageController = new PackageController(_MockContextManager.Object);
+            Mock<IUserController> _MockUserController = new Mock<IUserController>();
+            Mock<IVanController> _MockVanController = new Mock<IVanController>();
+            Mock<IDeliveryController> _MockDeliveryController = new Mock<IDeliveryController>();
+
+            IPackageController _PackageController = new PackageController(_MockContextManager.Object, _MockUserController.Object,
+                _MockVanController.Object, _MockDeliveryController.Object);
 
             Guid _MockPackageUID = Guid.NewGuid();
 
@@ -117,7 +128,12 @@ namespace DeliverySoftwareTest.DeliveryTest
 
             _MockContextManager.Setup(mock => mock.CreateNewDatabaseContext()).Returns(_MockDBContext);
 
-            IPackageController _PackageController = new PackageController(_MockContextManager.Object);
+            Mock<IUserController> _MockUserController = new Mock<IUserController>();
+            Mock<IVanController> _MockVanController = new Mock<IVanController>();
+            Mock<IDeliveryController> _MockDeliveryController = new Mock<IDeliveryController>();
+
+            IPackageController _PackageController = new PackageController(_MockContextManager.Object, _MockUserController.Object,
+                _MockVanController.Object, _MockDeliveryController.Object);
 
             Guid _MockPackageUID = Guid.NewGuid();
 
@@ -172,7 +188,12 @@ namespace DeliverySoftwareTest.DeliveryTest
 
             _MockContextManager.Setup(mock => mock.CreateNewDatabaseContext()).Returns(_MockDBContext);
 
-            IPackageController _PackageController = new PackageController(_MockContextManager.Object);
+            Mock<IUserController> _MockUserController = new Mock<IUserController>();
+            Mock<IVanController> _MockVanController = new Mock<IVanController>();
+            Mock<IDeliveryController> _MockDeliveryController = new Mock<IDeliveryController>();
+
+            IPackageController _PackageController = new PackageController(_MockContextManager.Object, _MockUserController.Object,
+                _MockVanController.Object, _MockDeliveryController.Object);
 
             Guid _MockCustomerUID = Guid.NewGuid();
 
@@ -223,7 +244,12 @@ namespace DeliverySoftwareTest.DeliveryTest
 
             _MockContextManager.Setup(mock => mock.CreateNewDatabaseContext()).Returns(_MockDBContext);
 
-            IPackageController _PackageController = new PackageController(_MockContextManager.Object);
+            Mock<IUserController> _MockUserController = new Mock<IUserController>();
+            Mock<IVanController> _MockVanController = new Mock<IVanController>();
+            Mock<IDeliveryController> _MockDeliveryController = new Mock<IDeliveryController>();
+
+            IPackageController _PackageController = new PackageController(_MockContextManager.Object, _MockUserController.Object,
+                _MockVanController.Object, _MockDeliveryController.Object);
 
             Guid _MockCustomerUID = Guid.NewGuid();
 
@@ -258,7 +284,12 @@ namespace DeliverySoftwareTest.DeliveryTest
 
             _MockContextManager.Setup(mock => mock.CreateNewDatabaseContext()).Returns(_MockDBContext);
 
-            IPackageController _PackageController = new PackageController(_MockContextManager.Object);
+            Mock<IUserController> _MockUserController = new Mock<IUserController>();
+            Mock<IVanController> _MockVanController = new Mock<IVanController>();
+            Mock<IDeliveryController> _MockDeliveryController = new Mock<IDeliveryController>();
+
+            IPackageController _PackageController = new PackageController(_MockContextManager.Object, _MockUserController.Object,
+                _MockVanController.Object, _MockDeliveryController.Object);
 
             Guid _MockCustomerUID = Guid.NewGuid();
 
@@ -293,7 +324,12 @@ namespace DeliverySoftwareTest.DeliveryTest
 
             _MockContextManager.Setup(mock => mock.CreateNewDatabaseContext()).Returns(_MockDBContext);
 
-            IPackageController _PackageController = new PackageController(_MockContextManager.Object);
+            Mock<IUserController> _MockUserController = new Mock<IUserController>();
+            Mock<IVanController> _MockVanController = new Mock<IVanController>();
+            Mock<IDeliveryController> _MockDeliveryController = new Mock<IDeliveryController>();
+
+            IPackageController _PackageController = new PackageController(_MockContextManager.Object, _MockUserController.Object,
+                _MockVanController.Object, _MockDeliveryController.Object);
 
             Guid _MockDeliveryUID = Guid.NewGuid();
 
@@ -349,7 +385,12 @@ namespace DeliverySoftwareTest.DeliveryTest
 
             _MockContextManager.Setup(mock => mock.CreateNewDatabaseContext()).Returns(_MockDBContext);
 
-            IPackageController _PackageController = new PackageController(_MockContextManager.Object);
+            Mock<IUserController> _MockUserController = new Mock<IUserController>();
+            Mock<IVanController> _MockVanController = new Mock<IVanController>();
+            Mock<IDeliveryController> _MockDeliveryController = new Mock<IDeliveryController>();
+
+            IPackageController _PackageController = new PackageController(_MockContextManager.Object, _MockUserController.Object,
+                _MockVanController.Object, _MockDeliveryController.Object);
 
             _MockDBContext.Database.EnsureDeleted();
 
@@ -404,7 +445,12 @@ namespace DeliverySoftwareTest.DeliveryTest
 
             _MockContextManager.Setup(mock => mock.CreateNewDatabaseContext()).Returns(_MockDBContext);
 
-            IPackageController _PackageController = new PackageController(_MockContextManager.Object);
+            Mock<IUserController> _MockUserController = new Mock<IUserController>();
+            Mock<IVanController> _MockVanController = new Mock<IVanController>();
+            Mock<IDeliveryController> _MockDeliveryController = new Mock<IDeliveryController>();
+
+            IPackageController _PackageController = new PackageController(_MockContextManager.Object, _MockUserController.Object,
+                _MockVanController.Object, _MockDeliveryController.Object);
 
             _MockDBContext.Database.EnsureDeleted();
 
@@ -447,7 +493,12 @@ namespace DeliverySoftwareTest.DeliveryTest
 
             _MockContextManager.Setup(mock => mock.CreateNewDatabaseContext()).Returns(_MockDBContext);
 
-            IPackageController _PackageController = new PackageController(_MockContextManager.Object);
+            Mock<IUserController> _MockUserController = new Mock<IUserController>();
+            Mock<IVanController> _MockVanController = new Mock<IVanController>();
+            Mock<IDeliveryController> _MockDeliveryController = new Mock<IDeliveryController>();
+
+            IPackageController _PackageController = new PackageController(_MockContextManager.Object, _MockUserController.Object,
+                _MockVanController.Object, _MockDeliveryController.Object);
 
             Guid _MockDeliveryUID = Guid.NewGuid();
 
@@ -503,7 +554,12 @@ namespace DeliverySoftwareTest.DeliveryTest
 
             _MockContextManager.Setup(mock => mock.CreateNewDatabaseContext()).Returns(_MockDBContext);
 
-            IPackageController _PackageController = new PackageController(_MockContextManager.Object);
+            Mock<IUserController> _MockUserController = new Mock<IUserController>();
+            Mock<IVanController> _MockVanController = new Mock<IVanController>();
+            Mock<IDeliveryController> _MockDeliveryController = new Mock<IDeliveryController>();
+
+            IPackageController _PackageController = new PackageController(_MockContextManager.Object, _MockUserController.Object,
+                _MockVanController.Object, _MockDeliveryController.Object);
 
             Guid _MockDeliveryUID = Guid.NewGuid();
 
@@ -557,7 +613,12 @@ namespace DeliverySoftwareTest.DeliveryTest
 
             _MockContextManager.Setup(mock => mock.CreateNewDatabaseContext()).Returns(_MockDBContext);
 
-            IPackageController _PackageController = new PackageController(_MockContextManager.Object);
+            Mock<IUserController> _MockUserController = new Mock<IUserController>();
+            Mock<IVanController> _MockVanController = new Mock<IVanController>();
+            Mock<IDeliveryController> _MockDeliveryController = new Mock<IDeliveryController>();
+
+            IPackageController _PackageController = new PackageController(_MockContextManager.Object, _MockUserController.Object,
+                _MockVanController.Object, _MockDeliveryController.Object);
 
             Guid _MockPackageUID = Guid.NewGuid();
 
@@ -597,7 +658,108 @@ namespace DeliverySoftwareTest.DeliveryTest
 
             _MockContextManager.Verify(mock => mock.CreateNewDatabaseContext(), Times.Once());
         }
-    }
 
+        [TestMethod]
+        public void PackageController_UpdateDeliveryRunDropOrder_SetsCorrectDropNumbers ()
+        {
+            Mock<IDBContextManager> _MockContextManager = new Mock<IDBContextManager>();
+
+            DbContextOptions<DeliveryDBContext> _DBContextOptions = new DbContextOptionsBuilder<DeliveryDBContext>()
+                .UseInMemoryDatabase(databaseName: "TestDatabase")
+                .Options;
+            DeliveryDBContext _MockDBContext = new DeliveryDBContext(_DBContextOptions);
+
+            _MockContextManager.Setup(mock => mock.CreateNewDatabaseContext()).Returns(_MockDBContext);
+
+            Mock<IUserController> _MockUserController = new Mock<IUserController>();
+
+            Guid _MockCustomer1UID = Guid.NewGuid();
+            Guid _MockCustomer2UID = Guid.NewGuid();
+            Guid _MockCustomer3UID = Guid.NewGuid();
+
+            DeliveryUser _MockUser1 = new DeliveryUser
+            {
+                Id = _MockCustomer1UID.ToString(),
+                HouseNumber = 3,
+                PostCode = "CV23 0RD"
+            };
+            DeliveryUser _MockUser2 = new DeliveryUser
+            {
+                Id = _MockCustomer2UID.ToString(),
+                HouseNumber = 7,
+                PostCode = "LE16 9RS"
+            };
+            DeliveryUser _MockUser3 = new DeliveryUser
+            {
+                Id = _MockCustomer3UID.ToString(),
+                HouseNumber = 2,
+                PostCode = "LE17 4HY"
+            };
+
+            _MockUserController.Setup(mock => mock.Get(_MockCustomer1UID)).Returns(_MockUser1);
+            _MockUserController.Setup(mock => mock.Get(_MockCustomer2UID)).Returns(_MockUser2);
+            _MockUserController.Setup(mock => mock.Get(_MockCustomer3UID)).Returns(_MockUser3);
+
+            Mock<IVanController> _MockVanController = new Mock<IVanController>();
+            Mock<IDeliveryController> _MockDeliveryController = new Mock<IDeliveryController>();
+
+            _MockDeliveryController.Setup(mock => mock.Get(It.IsAny<Guid>())).Returns(new Delivery()
+            {
+                VanUID = Guid.NewGuid()
+            });
+
+            _MockVanController.Setup(mock => mock.Get(It.IsAny<Guid>())).Returns(new Van()
+            {
+                DepotPostCode = "B92 0DP"
+            });
+
+            IPackageController _PackageController = new PackageController(_MockContextManager.Object, _MockUserController.Object,
+                _MockVanController.Object, _MockDeliveryController.Object);
+
+            Guid _MockDeliveryUID = Guid.NewGuid();
+
+            _MockDBContext.Database.EnsureDeleted();
+
+            _MockDBContext.Packages.AddRange(new Package
+            {
+                UID = Guid.NewGuid(),
+                DeliveryUID = _MockDeliveryUID,
+                CustomerUID = _MockCustomer1UID,
+                Description = "test desc",
+                TrackingCode = "test tracker",
+                DropNumber = 2
+            }, new Package
+            {
+                UID = Guid.NewGuid(),
+                DeliveryUID = _MockDeliveryUID,
+                CustomerUID = _MockCustomer2UID,
+                Description = "test desc",
+                TrackingCode = "test tracker",
+                DropNumber = 3
+            }, new Package
+            {
+                UID = Guid.NewGuid(),
+                DeliveryUID = _MockDeliveryUID,
+                CustomerUID = _MockCustomer3UID,
+                Description = "test desc",
+                TrackingCode = "test tracker",
+                DropNumber = 1
+            });            
+
+            _MockDBContext.SaveChanges();
+
+            _PackageController.UpdateDeliveryRunDropOrder(_MockDeliveryUID);
+
+            Package _Result1 = _MockDBContext.Packages.Where(package => package.CustomerUID == _MockCustomer1UID).Single();
+            Package _Result2 = _MockDBContext.Packages.Where(package => package.CustomerUID == _MockCustomer2UID).Single();
+            Package _Result3 = _MockDBContext.Packages.Where(package => package.CustomerUID == _MockCustomer3UID).Single();
+
+            Assert.AreEqual(1, _Result1.DropNumber);
+            Assert.AreEqual(3, _Result2.DropNumber);
+            Assert.AreEqual(2, _Result3.DropNumber);
+
+            _MockContextManager.Verify(mock => mock.CreateNewDatabaseContext(), Times.Once());
+        }
+    }
     
 }

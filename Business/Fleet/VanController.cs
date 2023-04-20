@@ -63,6 +63,7 @@ namespace DeliverySoftware.Business.Fleet
             _CurrentVan.Capacity = updatedVan.Capacity;
             _CurrentVan.DriverUID = updatedVan.DriverUID;
             _CurrentVan.Registration = updatedVan.Registration;
+            _CurrentVan.DepotPostCode = updatedVan.DepotPostCode;
 
             __DbContext.SaveChanges();
         }
