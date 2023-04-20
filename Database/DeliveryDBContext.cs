@@ -9,6 +9,7 @@ namespace DeliverySoftware.Database
     public class DeliveryDBContext : IdentityDbContext<DeliveryUser>
     {
         public DeliveryDBContext () { }
+
         public DeliveryDBContext (DbContextOptions<DeliveryDBContext> options) : base(options)
         { }
 

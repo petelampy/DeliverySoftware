@@ -10,9 +10,10 @@ namespace DeliverySoftware.Pages.Fleet
     public class FleetManagementModel : PageModel
     {
         private const string PERMISSION_DENIED_PAGE_PATH = "../PermissionDenied";
+
+        private readonly IDeliveryController __DeliveryController;
         private readonly IUserController __UserController;
         private readonly IVanController __VanController;
-        private readonly IDeliveryController __DeliveryController;
 
         public FleetManagementModel ()
         {
@@ -20,6 +21,17 @@ namespace DeliverySoftware.Pages.Fleet
             __VanController = new VanController();
             __DeliveryController = new DeliveryController();
         }
+
+        public int GetActiveDeliveries (Guid van_uid)
+        {
+            return __DeliveryController.GetCountByVan(van_uid);
+        }
+
+        public string GetDriverName (Guid driver_uid)
+        {
+            return __UserController.GetName(driver_uid);
+        }
+
         public IActionResult OnGet ()
         {
             string _CurrentUserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -35,16 +47,6 @@ namespace DeliverySoftware.Pages.Fleet
             {
                 return RedirectToPage(PERMISSION_DENIED_PAGE_PATH);
             }
-        }
-
-        public string GetDriverName(Guid driver_uid)
-        {
-            return __UserController.GetName(driver_uid);
-        }
-
-        public int GetActiveDeliveries (Guid van_uid)
-        {
-            return __DeliveryController.GetCountByVan(van_uid);
         }
 
         public async Task<IActionResult> OnGetDeleteVan (Guid uid)

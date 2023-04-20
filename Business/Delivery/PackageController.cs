@@ -16,9 +16,9 @@ namespace DeliverySoftware.Business.Delivery
 
         private readonly DeliveryDBContext __DbContext;
         private readonly IDBContextManager __DbContextManager;
+        private readonly IDeliveryController __DeliveryController;
         private readonly IUserController __UserController;
         private readonly IVanController __VanController;
-        private readonly IDeliveryController __DeliveryController;
 
         public PackageController () :
             this(new DBContextManager(), new UserController(), new VanController(), new DeliveryController())
@@ -47,7 +47,7 @@ namespace DeliverySoftware.Business.Delivery
             __DbContext.Packages.Add(newPackage);
             __DbContext.SaveChanges();
 
-            if(newPackage.DeliveryUID != Guid.Empty)
+            if (newPackage.DeliveryUID != Guid.Empty)
             {
                 UpdateDeliveryRunDropOrder(newPackage.DeliveryUID);
             }
@@ -60,7 +60,7 @@ namespace DeliverySoftware.Business.Delivery
             __DbContext.Remove(_Package);
             __DbContext.SaveChanges();
 
-            if(_Package.DeliveryUID != Guid.Empty)
+            if (_Package.DeliveryUID != Guid.Empty)
             {
                 UpdateDeliveryRunDropOrder(_Package.DeliveryUID);
             }

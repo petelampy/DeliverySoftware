@@ -1,5 +1,4 @@
 using DeliverySoftware.Business.Delivery;
-using DeliverySoftware.Business.Fleet;
 using DeliverySoftware.Business.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,14 +9,21 @@ namespace DeliverySoftware.Pages.Customer
     public class CustomerManagementModel : PageModel
     {
         private const string PERMISSION_DENIED_PAGE_PATH = "../PermissionDenied";
-        private readonly IUserController __UserController;
+
         private readonly IPackageController __PackageController;
+        private readonly IUserController __UserController;
 
         public CustomerManagementModel ()
         {
             __UserController = new UserController();
             __PackageController = new PackageController();
         }
+
+        public bool DoesCustomerHaveUndeliveredPackages (Guid uid)
+        {
+            return __PackageController.GetActivePackagesByCustomer(uid) > 0;
+        }
+
         public IActionResult OnGet ()
         {
             string _CurrentUserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -33,10 +39,6 @@ namespace DeliverySoftware.Pages.Customer
             {
                 return RedirectToPage(PERMISSION_DENIED_PAGE_PATH);
             }
-        }
-
-        public bool DoesCustomerHaveUndeliveredPackages(Guid uid) {
-           return  __PackageController.GetActivePackagesByCustomer(uid) > 0;
         }
 
         public async Task<IActionResult> OnGetDeleteCustomer (string id)

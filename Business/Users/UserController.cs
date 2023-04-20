@@ -1,5 +1,4 @@
-﻿using DeliverySoftware.Business.Fleet;
-using DeliverySoftware.Business.Utilities;
+﻿using DeliverySoftware.Business.Utilities;
 using DeliverySoftware.Database;
 using Microsoft.AspNetCore.Identity;
 
@@ -9,8 +8,8 @@ namespace DeliverySoftware.Business.Users
     {
         private readonly DeliveryDBContext __DbContext;
         private readonly IDBContextManager __DbContextManager;
-        private readonly IPasswordHasher<DeliveryUser> __PasswordHasher;
         private readonly IEmailController __EmailController;
+        private readonly IPasswordHasher<DeliveryUser> __PasswordHasher;
 
         public UserController () :
             this(new DBContextManager(), new PasswordHasher<DeliveryUser>(), new EmailController())
@@ -22,63 +21,6 @@ namespace DeliverySoftware.Business.Users
             __DbContext = __DbContextManager.CreateNewDatabaseContext();
             __PasswordHasher = passwordHasher;
             __EmailController = emailController;
-        }
-
-        public DeliveryUser Get (Guid uid)
-        {
-            return __DbContext.Users
-                 .ToList()
-                 .Where(user => user.Id == uid.ToString())
-                 .SingleOrDefault(new DeliveryUser());
-        }
-
-        public List<DeliveryUser> Get (List<Guid> uids)
-        {
-            return __DbContext.Users
-                 .ToList()
-                 .Where(user => uids.Contains(new Guid(user.Id)))
-                 .ToList();
-        }
-
-        public string GetName (Guid uid)
-        {
-            DeliveryUser _User = __DbContext.Users
-                 .ToList()
-                 .Where(user => user.Id == uid.ToString())
-                 .SingleOrDefault(new DeliveryUser());
-
-            return _User.Forename + " " + _User.Surname;
-        }
-
-        public List<DeliveryUser> GetAll ()
-        {
-            return __DbContext.Users.ToList();
-        }
-
-        public List<DeliveryUser> GetAllDrivers ()
-        {
-            return GetAll()
-                .Where(user => user.UserType == UserType.Driver)
-                .ToList();
-        }
-
-        public List<DeliveryUser> GetAllCustomers ()
-        {
-            return GetAll()
-                .Where(user => user.UserType == UserType.Customer)
-                .ToList();
-        }
-
-        public List<DeliveryUser> GetAllEmployees ()
-        {
-            return GetAll()
-                .Where(user => user.UserType == UserType.Employee)
-                .ToList();
-        }
-
-        private int GenerateTemporaryPassword ()
-        {
-            return new Random().Next(1000000, 9999999);
         }
 
         public void Create (DeliveryUser newUser)
@@ -119,36 +61,93 @@ namespace DeliverySoftware.Business.Users
             __DbContext.SaveChanges();
         }
 
-        public void Update (DeliveryUser updatedUser)
-        {
-            DeliveryUser _CurrentUser = Get(new Guid(updatedUser.Id));
-
-            if(_CurrentUser.UserType != UserType.Customer)
-            {
-                _CurrentUser.UserName = updatedUser.UserName;
-                _CurrentUser.NormalizedUserName = updatedUser.UserName.ToUpper();
-            }
-
-            if(_CurrentUser.UserType == UserType.Customer)
-            {
-                _CurrentUser.Address = updatedUser.Address;
-                _CurrentUser.HouseNumber = updatedUser.HouseNumber;
-                _CurrentUser.PostCode = updatedUser.PostCode;
-            }
-            
-            _CurrentUser.Forename = updatedUser.Forename;
-            _CurrentUser.Surname = updatedUser.Surname;
-            _CurrentUser.Email = updatedUser.Email;
-            _CurrentUser.NormalizedEmail = updatedUser.Email.ToUpper();
-
-            __DbContext.SaveChanges();
-        }
-
         public void Delete (Guid uid)
         {
             DeliveryUser _User = Get(uid);
 
             __DbContext.Remove(_User);
+            __DbContext.SaveChanges();
+        }
+
+        private int GenerateTemporaryPassword ()
+        {
+            return new Random().Next(1000000, 9999999);
+        }
+
+        public DeliveryUser Get (Guid uid)
+        {
+            return __DbContext.Users
+                 .ToList()
+                 .Where(user => user.Id == uid.ToString())
+                 .SingleOrDefault(new DeliveryUser());
+        }
+
+        public List<DeliveryUser> Get (List<Guid> uids)
+        {
+            return __DbContext.Users
+                 .ToList()
+                 .Where(user => uids.Contains(new Guid(user.Id)))
+                 .ToList();
+        }
+
+        public List<DeliveryUser> GetAll ()
+        {
+            return __DbContext.Users.ToList();
+        }
+
+        public List<DeliveryUser> GetAllCustomers ()
+        {
+            return GetAll()
+                .Where(user => user.UserType == UserType.Customer)
+                .ToList();
+        }
+
+        public List<DeliveryUser> GetAllDrivers ()
+        {
+            return GetAll()
+                .Where(user => user.UserType == UserType.Driver)
+                .ToList();
+        }
+
+        public List<DeliveryUser> GetAllEmployees ()
+        {
+            return GetAll()
+                .Where(user => user.UserType == UserType.Employee)
+                .ToList();
+        }
+
+        public string GetName (Guid uid)
+        {
+            DeliveryUser _User = __DbContext.Users
+                 .ToList()
+                 .Where(user => user.Id == uid.ToString())
+                 .SingleOrDefault(new DeliveryUser());
+
+            return _User.Forename + " " + _User.Surname;
+        }
+
+        public void Update (DeliveryUser updatedUser)
+        {
+            DeliveryUser _CurrentUser = Get(new Guid(updatedUser.Id));
+
+            if (_CurrentUser.UserType != UserType.Customer)
+            {
+                _CurrentUser.UserName = updatedUser.UserName;
+                _CurrentUser.NormalizedUserName = updatedUser.UserName.ToUpper();
+            }
+
+            if (_CurrentUser.UserType == UserType.Customer)
+            {
+                _CurrentUser.Address = updatedUser.Address;
+                _CurrentUser.HouseNumber = updatedUser.HouseNumber;
+                _CurrentUser.PostCode = updatedUser.PostCode;
+            }
+
+            _CurrentUser.Forename = updatedUser.Forename;
+            _CurrentUser.Surname = updatedUser.Surname;
+            _CurrentUser.Email = updatedUser.Email;
+            _CurrentUser.NormalizedEmail = updatedUser.Email.ToUpper();
+
             __DbContext.SaveChanges();
         }
     }

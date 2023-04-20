@@ -124,7 +124,7 @@ namespace DeliverySoftware.Database
                 }
             };
 
-            foreach(DeliveryUser _User in _DeliveryUsers)
+            foreach (DeliveryUser _User in _DeliveryUsers)
             {
                 _User.PasswordHash = _Hasher.HashPassword(_User, "testaccount");
             }

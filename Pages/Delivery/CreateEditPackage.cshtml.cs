@@ -12,12 +12,12 @@ namespace DeliverySoftware.Pages.Delivery
     public class CreateEditPackageModel : PageModel
     {
         private const string PERMISSION_DENIED_PAGE_PATH = "../PermissionDenied";
-        private readonly IUserController __UserController;
-        private readonly IPackageController __PackageController;
-        private readonly IDeliveryController __DeliveryController;
-        private readonly IVanController __VanController;
-        private readonly IEmailController __EmailController;
 
+        private readonly IDeliveryController __DeliveryController;
+        private readonly IEmailController __EmailController;
+        private readonly IPackageController __PackageController;
+        private readonly IUserController __UserController;
+        private readonly IVanController __VanController;
 
         public CreateEditPackageModel ()
         {
@@ -26,6 +26,53 @@ namespace DeliverySoftware.Pages.Delivery
             __DeliveryController = new DeliveryController();
             __VanController = new VanController();
             __EmailController = new EmailController();
+        }
+
+        private void CreateCustomerSelector ()
+        {
+            List<DeliveryUser> _Customers = __UserController.GetAllCustomers();
+
+            CustomerSelection = _Customers.Select(customer =>
+                new SelectListItem
+                {
+                    Text = customer.Forename + " " + customer.Surname,
+                    Value = customer.Id,
+                    Selected = Package.CustomerUID.Equals(new Guid(customer.Id))
+                }).ToList();
+        }
+
+        private void CreateDeliverySelector ()
+        {
+            List<Business.Delivery.Delivery> _Deliveries = __DeliveryController.GetAllAvailable();
+
+            DeliverySelection = _Deliveries.Select(delivery =>
+                new SelectListItem
+                {
+                    Text = delivery.Id + " - " + __VanController.GetRegistration(delivery.VanUID),
+                    Value = delivery.UID.ToString(),
+                    Selected = Package.DeliveryUID.Equals(delivery.UID)
+                }).ToList();
+        }
+
+        public string GenerateNewTrackingCode ()
+        {
+            Random _Random = new Random();
+
+            string _TrackingCode = "";
+
+            for (int _Counter = 0; _Counter < 5; _Counter++)
+            {
+                int _RandomCharIntValue = _Random.Next(65, 91);
+                char _RandomCharacter = Convert.ToChar(_RandomCharIntValue);
+                _TrackingCode += _RandomCharacter;
+            }
+
+            int _RandomNumber = _Random.Next(10000, 90000);
+            _RandomNumber += DateTime.Now.Millisecond;
+
+            _TrackingCode += _RandomNumber;
+
+            return _TrackingCode;
         }
 
         public IActionResult OnGet ()
@@ -55,27 +102,6 @@ namespace DeliverySoftware.Pages.Delivery
             {
                 return RedirectToPage(PERMISSION_DENIED_PAGE_PATH);
             }
-        }
-
-        public string GenerateNewTrackingCode()
-        {
-            Random _Random = new Random();
-
-            string _TrackingCode = "";
-
-            for (int _Counter = 0; _Counter < 5; _Counter++)
-            {
-                int _RandomCharIntValue = _Random.Next(65, 91);
-                char _RandomCharacter = Convert.ToChar(_RandomCharIntValue);
-                _TrackingCode += _RandomCharacter;
-            }
-
-            int _RandomNumber = _Random.Next(10000, 90000);
-            _RandomNumber += DateTime.Now.Millisecond;
-
-            _TrackingCode += _RandomNumber;
-
-            return _TrackingCode;
         }
 
         public IActionResult OnPost ()
@@ -127,7 +153,7 @@ namespace DeliverySoftware.Pages.Delivery
             return RedirectToPage("PackageManagement");
         }
 
-        private void UpdatePackageCount(Guid delivery_uid)
+        private void UpdatePackageCount (Guid delivery_uid)
         {
             int _NumberOfPackages = __PackageController.GetPackageCountByDelivery(delivery_uid);
 
@@ -138,33 +164,7 @@ namespace DeliverySoftware.Pages.Delivery
             __DeliveryController.Update(_DeliveryRun);
         }
 
-        private void CreateCustomerSelector ()
-        {
-            List<DeliveryUser> _Customers = __UserController.GetAllCustomers();
-
-            CustomerSelection = _Customers.Select(customer =>
-                new SelectListItem
-                {
-                    Text = customer.Forename + " " + customer.Surname,
-                    Value = customer.Id,
-                    Selected = Package.CustomerUID.Equals(new Guid(customer.Id))
-                }).ToList();
-        }
-
-        private void CreateDeliverySelector ()
-        {
-            List<Business.Delivery.Delivery> _Deliveries = __DeliveryController.GetAllAvailable();
-
-            DeliverySelection = _Deliveries.Select(delivery =>
-                new SelectListItem
-                {
-                    Text = delivery.Id + " - " + __VanController.GetRegistration(delivery.VanUID),
-                    Value = delivery.UID.ToString(),
-                    Selected = Package.DeliveryUID.Equals(delivery.UID)
-                }).ToList();
-        }
-
-        private void ValidateModel()
+        private void ValidateModel ()
         {
             Business.Delivery.Delivery _DeliveryRun = __DeliveryController.Get(Package.DeliveryUID);
             List<Package> _PackagesOnDelivery = __PackageController.GetPackagesByDelivery(Package.DeliveryUID);
@@ -174,7 +174,7 @@ namespace DeliverySoftware.Pages.Delivery
 
             if (Package.UID == Guid.Empty)
             {
-                if(Package.Size + _SizeUsed > _SelectedVan.Capacity)
+                if (Package.Size + _SizeUsed > _SelectedVan.Capacity)
                 {
                     ModelState.AddModelError("Package.Size", "This package won't fit in the delivery van for this run!");
                 }
@@ -182,8 +182,8 @@ namespace DeliverySoftware.Pages.Delivery
             else
             {
                 Package _CurrentPackage = __PackageController.Get(Package.UID);
-                
-                if(Package.Size + (_SizeUsed - _CurrentPackage.Size) > _SelectedVan.Capacity)
+
+                if (Package.Size + (_SizeUsed - _CurrentPackage.Size) > _SelectedVan.Capacity)
                 {
                     ModelState.AddModelError("Package.Size", "This package won't fit in the delivery van for this run!");
                 }
@@ -195,11 +195,13 @@ namespace DeliverySoftware.Pages.Delivery
             }
         }
 
-        [BindProperty(SupportsGet = true)]
-        public Guid UID { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public Package Package { get; set; }
         public List<SelectListItem> CustomerSelection { get; set; }
         public List<SelectListItem> DeliverySelection { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public Package Package { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public Guid UID { get; set; }
     }
 }

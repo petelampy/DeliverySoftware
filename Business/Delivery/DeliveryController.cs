@@ -1,5 +1,4 @@
-﻿using DeliverySoftware.Business.Fleet;
-using DeliverySoftware.Database;
+﻿using DeliverySoftware.Database;
 
 namespace DeliverySoftware.Business.Delivery
 {
@@ -18,20 +17,31 @@ namespace DeliverySoftware.Business.Delivery
             __DbContext = __DbContextManager.CreateNewDatabaseContext();
         }
 
+        public void Create (Delivery newDelivery)
+        {
+            newDelivery.UID = Guid.NewGuid();
+            newDelivery.CurrentDrop = 1;
+            newDelivery.Status = DeliveryStatus.Pending;
+            newDelivery.NumberOfPackages = 0;
+
+            __DbContext.Deliveries.Add(newDelivery);
+            __DbContext.SaveChanges();
+        }
+
+        public void Delete (Guid uid)
+        {
+            Delivery _Delivery = Get(uid);
+
+            __DbContext.Remove(_Delivery);
+            __DbContext.SaveChanges();
+        }
+
         public Delivery Get (Guid uid)
         {
             return __DbContext.Deliveries
                  .ToList()
                  .Where(delivery => delivery.UID == uid)
                  .SingleOrDefault(new Delivery());
-        }
-
-        public List<Delivery> GetByVan (Guid van_uid)
-        {
-            return __DbContext.Deliveries
-                 .AsEnumerable()
-                 .Where(delivery => delivery.VanUID == van_uid)
-                 .ToList();
         }
 
         public List<Delivery> GetAll ()
@@ -48,7 +58,15 @@ namespace DeliverySoftware.Business.Delivery
                 .ToList();
         }
 
-        public int GetCountByVan(Guid van_uid)
+        public List<Delivery> GetByVan (Guid van_uid)
+        {
+            return __DbContext.Deliveries
+                 .AsEnumerable()
+                 .Where(delivery => delivery.VanUID == van_uid)
+                 .ToList();
+        }
+
+        public int GetCountByVan (Guid van_uid)
         {
             return __DbContext
                 .Deliveries
@@ -66,17 +84,6 @@ namespace DeliverySoftware.Business.Delivery
                 .Count() > 0;
         }
 
-        public void Create (Delivery newDelivery)
-        {
-            newDelivery.UID = Guid.NewGuid();
-            newDelivery.CurrentDrop = 1;
-            newDelivery.Status = DeliveryStatus.Pending;
-            newDelivery.NumberOfPackages = 0;
-
-            __DbContext.Deliveries.Add(newDelivery);
-            __DbContext.SaveChanges();
-        }
-
         public void Update (Delivery updatedDelivery)
         {
             Delivery _CurrentDelivery = Get(updatedDelivery.UID);
@@ -87,14 +94,6 @@ namespace DeliverySoftware.Business.Delivery
             _CurrentDelivery.VanUID = updatedDelivery.VanUID;
             _CurrentDelivery.Date = updatedDelivery.Date;
 
-            __DbContext.SaveChanges();
-        }
-
-        public void Delete (Guid uid)
-        {
-            Delivery _Delivery = Get(uid);
-
-            __DbContext.Remove(_Delivery);
             __DbContext.SaveChanges();
         }
     }

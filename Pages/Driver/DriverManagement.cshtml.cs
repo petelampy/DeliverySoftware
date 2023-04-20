@@ -10,6 +10,7 @@ namespace DeliverySoftware.Pages.Driver
     {
 
         private const string PERMISSION_DENIED_PAGE_PATH = "../PermissionDenied";
+
         private readonly IUserController __UserController;
         private readonly IVanController __VanController;
 
@@ -18,7 +19,13 @@ namespace DeliverySoftware.Pages.Driver
             __UserController = new UserController();
             __VanController = new VanController();
         }
-        public IActionResult OnGet()
+
+        public int GetDriverVanCount (Guid driver_uid)
+        {
+            return __VanController.GetCountByDriver(driver_uid);
+        }
+
+        public IActionResult OnGet ()
         {
             string _CurrentUserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
             DeliveryUser _CurrentUser = __UserController.Get(new Guid(_CurrentUserID));
@@ -33,11 +40,6 @@ namespace DeliverySoftware.Pages.Driver
             {
                 return RedirectToPage(PERMISSION_DENIED_PAGE_PATH);
             }
-        }
-
-        public int GetDriverVanCount(Guid driver_uid)
-        {
-            return __VanController.GetCountByDriver(driver_uid);
         }
 
         public async Task<IActionResult> OnGetDeleteDriver (string id)

@@ -11,14 +11,16 @@ namespace DeliverySoftware.Pages.Driver
     public class DeliveryRunsModel : PageModel
     {
         private const string PERMISSION_DENIED_PAGE_PATH = "../PermissionDenied";
-        private readonly IUserController __UserController;
+
         private readonly IDeliveryController __DeliveryController;
+        private readonly IUserController __UserController;
 
         public DeliveryRunsModel ()
         {
             __UserController = new UserController();
             __DeliveryController = new DeliveryController();
         }
+
         public IActionResult OnGet ()
         {
             string _CurrentUserID = User.FindFirstValue(ClaimTypes.NameIdentifier);

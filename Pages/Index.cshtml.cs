@@ -9,10 +9,10 @@ namespace DeliverySoftware.Pages
     [Authorize]
     public class IndexModel : PageModel
     {
-        private static readonly string DELIVERY_RUNS_PAGE_PATH = "./Driver/DeliveryRuns";
-        private static readonly string PACKAGES_PAGE_PATH = "./Delivery/PackageManagement";
         private readonly ILogger<IndexModel> __Logger;
         private readonly IUserController __UserController;
+        private static readonly string DELIVERY_RUNS_PAGE_PATH = "./Driver/DeliveryRuns";
+        private static readonly string PACKAGES_PAGE_PATH = "./Delivery/PackageManagement";
 
         public IndexModel (ILogger<IndexModel> logger)
         {

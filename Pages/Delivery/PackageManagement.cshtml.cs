@@ -1,5 +1,4 @@
 using DeliverySoftware.Business.Delivery;
-using DeliverySoftware.Business.Fleet;
 using DeliverySoftware.Business.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,9 +9,10 @@ namespace DeliverySoftware.Pages.Delivery
     public class PackageManagementModel : PageModel
     {
         private const string PERMISSION_DENIED_PAGE_PATH = "../PermissionDenied";
-        private readonly IUserController __UserController;
-        private readonly IPackageController __PackageController;
+
         private readonly IDeliveryController __DeliveryController;
+        private readonly IPackageController __PackageController;
+        private readonly IUserController __UserController;
 
         public PackageManagementModel ()
         {
@@ -20,6 +20,18 @@ namespace DeliverySoftware.Pages.Delivery
             __PackageController = new PackageController();
             __DeliveryController = new DeliveryController();
         }
+
+        public string GetCustomerName (Guid customer_uid)
+        {
+            return __UserController.GetName(customer_uid);
+        }
+
+        public bool IsPackageOutForDelivery (Guid uid)
+        {
+            Package _Package = __PackageController.Get(uid);
+            return _Package.IsAssignedToDelivery && __DeliveryController.HasDeliveryRunStarted(_Package.DeliveryUID);
+        }
+
         public IActionResult OnGet ()
         {
             string _CurrentUserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -35,17 +47,6 @@ namespace DeliverySoftware.Pages.Delivery
             {
                 return RedirectToPage(PERMISSION_DENIED_PAGE_PATH);
             }
-        }
-
-        public string GetCustomerName(Guid customer_uid)
-        {
-            return __UserController.GetName(customer_uid);
-        }
-
-        public bool IsPackageOutForDelivery(Guid uid)
-        {
-            Package _Package = __PackageController.Get(uid);
-            return _Package.IsAssignedToDelivery && __DeliveryController.HasDeliveryRunStarted(_Package.DeliveryUID);
         }
 
         public async Task<IActionResult> OnGetDeletePackage (Guid uid)
@@ -74,7 +75,7 @@ namespace DeliverySoftware.Pages.Delivery
                     List<Package> _PackagesRemaining = __PackageController.GetPackagesByDelivery(_DeliveryUID);
 
                     int _Counter = 1;
-                    foreach(Package _PackageToUpdate in _PackagesRemaining)
+                    foreach (Package _PackageToUpdate in _PackagesRemaining)
                     {
                         _PackageToUpdate.DropNumber = _Counter;
                         __PackageController.Update(_PackageToUpdate);
@@ -82,7 +83,7 @@ namespace DeliverySoftware.Pages.Delivery
                         _Counter += 1;
                     }
                 }
-                
+
                 return RedirectToPage("PackageManagement");
             }
         }

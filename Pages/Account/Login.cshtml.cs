@@ -11,8 +11,8 @@ namespace DeliverySoftware.Pages.Account
         private const string INDEX_PAGE_PATH = "../Index";
         private const string ORDER_TRACKING_PAGE_PATH = "../Customer/OrderTracking";
 
-        private readonly SignInManager<DeliveryUser> __SignInManager;
         private readonly IPackageController __PackageController;
+        private readonly SignInManager<DeliveryUser> __SignInManager;
         private readonly IUserController __UserController;
 
         public LoginModel (SignInManager<DeliveryUser> signInManager, UserManager<DeliveryUser> userManager)
@@ -22,8 +22,15 @@ namespace DeliverySoftware.Pages.Account
             __UserController = new UserController();
         }
 
-        public void OnGet()
+        public void OnGet ()
         {
+        }
+
+        public async Task<IActionResult> OnGetLogoutAsync ()
+        {
+            __SignInManager.SignOutAsync();
+
+            return RedirectToPage(INDEX_PAGE_PATH);
         }
 
         public async Task<IActionResult> OnPostLoginAsync (string username, string password, bool rememberMe, string? returnUrl)
@@ -53,25 +60,18 @@ namespace DeliverySoftware.Pages.Account
             return Page();
         }
 
-        public async Task<IActionResult> OnGetLogoutAsync ()
-        {
-            __SignInManager.SignOutAsync();
-
-            return RedirectToPage(INDEX_PAGE_PATH);
-        }
-
         public async Task<IActionResult> OnPostLoginWithCodeAsync (string trackingCode)
         {
             bool _IsValidTrackingCode = __PackageController.DoesTrackingCodeExist(trackingCode);
 
-            if(trackingCode == null || trackingCode.Length < 1)
+            if (trackingCode == null || trackingCode.Length < 1)
             {
                 ModelState.Clear();
                 ModelState.AddModelError("TrackingCode", "Tracking Code is required!");
                 return Page();
             }
 
-            if(_IsValidTrackingCode)
+            if (_IsValidTrackingCode)
             {
                 return RedirectToPage(ORDER_TRACKING_PAGE_PATH, new { TrackingCode = trackingCode });
             }

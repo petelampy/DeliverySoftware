@@ -10,10 +10,11 @@ namespace DeliverySoftware.Pages.Delivery
     public class DeliveryManagementModel : PageModel
     {
         private const string PERMISSION_DENIED_PAGE_PATH = "../PermissionDenied";
-        private readonly IUserController __UserController;
+
         private readonly IDeliveryController __DeliveryController;
-        private readonly IVanController __VanController;
         private readonly IPackageController __PackageController;
+        private readonly IUserController __UserController;
+        private readonly IVanController __VanController;
 
         public DeliveryManagementModel ()
         {
@@ -22,6 +23,17 @@ namespace DeliverySoftware.Pages.Delivery
             __VanController = new VanController();
             __PackageController = new PackageController();
         }
+
+        public bool DoesDeliveryHavePackages (Guid uid)
+        {
+            return __PackageController.GetPackageCountByDelivery(uid) > 0;
+        }
+
+        public string GetVanRegistration (Guid van_uid)
+        {
+            return __VanController.GetRegistration(van_uid);
+        }
+
         public IActionResult OnGet ()
         {
             string _CurrentUserID = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -37,16 +49,6 @@ namespace DeliverySoftware.Pages.Delivery
             {
                 return RedirectToPage(PERMISSION_DENIED_PAGE_PATH);
             }
-        }
-
-        public string GetVanRegistration(Guid van_uid)
-        {
-            return __VanController.GetRegistration(van_uid);
-        }
-
-        public bool DoesDeliveryHavePackages (Guid uid)
-        {
-            return __PackageController.GetPackageCountByDelivery(uid) > 0;
         }
 
         public async Task<IActionResult> OnGetDeleteDelivery (Guid uid)

@@ -1,6 +1,4 @@
-using DeliverySoftware.Business.Fleet;
 using DeliverySoftware.Business.Users;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
@@ -10,9 +8,10 @@ namespace DeliverySoftware.Pages.User
     public class CreateEditUserModel : PageModel
     {
         private const string PERMISSION_DENIED_PAGE_PATH = "../PermissionDenied";
+
         private readonly IUserController __UserController;
 
-        public CreateEditUserModel()
+        public CreateEditUserModel ()
         {
             __UserController = new UserController();
         }
@@ -62,7 +61,7 @@ namespace DeliverySoftware.Pages.User
                 __UserController.Create(ModifiedUser);
             }
 
-            switch(UserTypeToCreateOrEdit)
+            switch (UserTypeToCreateOrEdit)
             {
                 case UserType.Driver:
                     return RedirectToPage("../Driver/DriverManagement");
@@ -73,11 +72,11 @@ namespace DeliverySoftware.Pages.User
             }
         }
 
-        private void ValidateModel()
+        private void ValidateModel ()
         {
             if (ModifiedUser.UserType == UserType.Customer || UserTypeToCreateOrEdit == UserType.Customer)
             {
-                if(ModifiedUser.HouseNumber <= 0)
+                if (ModifiedUser.HouseNumber <= 0)
                 {
                     ModelState.AddModelError("ModifiedUser.HouseNumber", "Invalid House Number!");
                 }
@@ -95,7 +94,7 @@ namespace DeliverySoftware.Pages.User
                 }
 
             }
-            if(ModifiedUser.UserType == UserType.Driver || UserTypeToCreateOrEdit == UserType.Driver)
+            if (ModifiedUser.UserType == UserType.Driver || UserTypeToCreateOrEdit == UserType.Driver)
             {
                 if (ModifiedUser.UserName == null || ModifiedUser.UserName.Length < 1)
                 {

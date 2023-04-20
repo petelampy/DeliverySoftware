@@ -3,15 +3,14 @@ using DeliverySoftware.Business.Fleet;
 using DeliverySoftware.Business.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Security.Claims;
 
 namespace DeliverySoftware.Pages.Customer
 {
     public class OrderTrackingModel : PageModel
     {
-        private readonly IUserController __UserController;
-        private readonly IPackageController __PackageController;
         private readonly IDeliveryController __DeliveryController;
+        private readonly IPackageController __PackageController;
+        private readonly IUserController __UserController;
         private readonly IVanController __VanController;
 
         public OrderTrackingModel ()
@@ -22,7 +21,7 @@ namespace DeliverySoftware.Pages.Customer
             __VanController = new VanController();
         }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet ()
         {
             if (TrackingCode != null && TrackingCode.Length > 0)
             {
@@ -30,9 +29,9 @@ namespace DeliverySoftware.Pages.Customer
                 Customer = __UserController.Get(Package.CustomerUID);
                 DeliveryRun = __DeliveryController.Get(Package.DeliveryUID);
 
-                
-                
-                if(DeliveryRun.CurrentDrop == 1)
+
+
+                if (DeliveryRun.CurrentDrop == 1)
                 {
                     Van _DeliveryVan = __VanController.Get(DeliveryRun.VanUID);
 
@@ -55,20 +54,21 @@ namespace DeliverySoftware.Pages.Customer
             return Page();
         }
 
-        [BindProperty(SupportsGet = true)]
-        public string TrackingCode { get; set; }
-
-        public Package Package { get; set; }
-
         public DeliveryUser Customer { get; set; }
-
         public Business.Delivery.Delivery DeliveryRun { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public int DriverHouseNumber { get; set; }
+
         [BindProperty(SupportsGet = true)]
         public string DriverPostCode { get; set; }
+
         [BindProperty(SupportsGet = true)]
         public bool IsOutForDelivery { get; set; }
+
+        public Package Package { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string TrackingCode { get; set; }
     }
 }

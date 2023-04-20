@@ -4,7 +4,6 @@ using DeliverySoftware.Business.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Identity.Client;
 using System.Security.Claims;
 
 namespace DeliverySoftware.Pages.Delivery
@@ -12,8 +11,9 @@ namespace DeliverySoftware.Pages.Delivery
     public class CreateEditDeliveryModel : PageModel
     {
         private const string PERMISSION_DENIED_PAGE_PATH = "../PermissionDenied";
-        private readonly IUserController __UserController;
+
         private readonly IDeliveryController __DeliveryController;
+        private readonly IUserController __UserController;
         private readonly IVanController __VanController;
 
 
@@ -22,6 +22,19 @@ namespace DeliverySoftware.Pages.Delivery
             __UserController = new UserController();
             __DeliveryController = new DeliveryController();
             __VanController = new VanController();
+        }
+
+        private void CreateVanSelector ()
+        {
+            List<Van> _Vans = __VanController.GetAll();
+
+            VanSelection = _Vans.Select(van =>
+                new SelectListItem
+                {
+                    Text = van.Registration,
+                    Value = van.UID.ToString(),
+                    Selected = DeliveryRun.VanUID.Equals(van.UID)
+                }).ToList();
         }
 
         public IActionResult OnGet ()
@@ -52,19 +65,6 @@ namespace DeliverySoftware.Pages.Delivery
             }
         }
 
-        private void CreateVanSelector ()
-        {
-            List<Van> _Vans = __VanController.GetAll();
-
-            VanSelection = _Vans.Select(van =>
-                new SelectListItem
-                {
-                    Text = van.Registration,
-                    Value = van.UID.ToString(),
-                    Selected = DeliveryRun.VanUID.Equals(van.UID)
-                }).ToList();
-        }
-
         public IActionResult OnPost ()
         {
             ValidateModel();
@@ -87,10 +87,10 @@ namespace DeliverySoftware.Pages.Delivery
             return RedirectToPage("DeliveryManagement");
         }
 
-        private void ValidateModel()
+        private void ValidateModel ()
         {
 
-            if(DeliveryRun.UID == Guid.Empty)
+            if (DeliveryRun.UID == Guid.Empty)
             {
                 if (DeliveryRun.Date < DateTime.Now)
                 {
@@ -106,13 +106,15 @@ namespace DeliverySoftware.Pages.Delivery
                     ModelState.AddModelError("DeliveryRun.Date", "Can't change a delivery date to the past!");
                 }
             }
-            
+
         }
 
         [BindProperty(SupportsGet = true)]
         public Business.Delivery.Delivery DeliveryRun { get; set; }
+
         [BindProperty(SupportsGet = true)]
         public Guid UID { get; set; }
+
         public List<SelectListItem> VanSelection { get; set; }
     }
 }

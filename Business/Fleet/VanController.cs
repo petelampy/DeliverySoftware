@@ -1,6 +1,4 @@
-﻿using DeliverySoftware.Business.Delivery;
-using DeliverySoftware.Business.Users;
-using DeliverySoftware.Database;
+﻿using DeliverySoftware.Database;
 
 namespace DeliverySoftware.Business.Fleet
 {
@@ -19,6 +17,22 @@ namespace DeliverySoftware.Business.Fleet
             __DbContext = __DbContextManager.CreateNewDatabaseContext();
         }
 
+        public void Create (Van newVan)
+        {
+            newVan.UID = Guid.NewGuid();
+
+            __DbContext.Vans.Add(newVan);
+            __DbContext.SaveChanges();
+        }
+
+        public void Delete (Guid uid)
+        {
+            Van _Van = Get(uid);
+
+            __DbContext.Remove(_Van);
+            __DbContext.SaveChanges();
+        }
+
         public Van Get (Guid uid)
         {
             return __DbContext.Vans
@@ -32,7 +46,7 @@ namespace DeliverySoftware.Business.Fleet
             return __DbContext.Vans.ToList();
         }
 
-        public int GetCountByDriver(Guid driver_uid)
+        public int GetCountByDriver (Guid driver_uid)
         {
             return __DbContext.Vans
                 .Where(van => van.DriverUID == driver_uid)
@@ -48,14 +62,6 @@ namespace DeliverySoftware.Business.Fleet
                 .Registration;
         }
 
-        public void Create (Van newVan)
-        {
-            newVan.UID = Guid.NewGuid();
-
-            __DbContext.Vans.Add(newVan);
-            __DbContext.SaveChanges();
-        }
-
         public void Update (Van updatedVan)
         {
             Van _CurrentVan = Get(updatedVan.UID);
@@ -65,14 +71,6 @@ namespace DeliverySoftware.Business.Fleet
             _CurrentVan.Registration = updatedVan.Registration;
             _CurrentVan.DepotPostCode = updatedVan.DepotPostCode;
 
-            __DbContext.SaveChanges();
-        }
-
-        public void Delete (Guid uid)
-        {
-            Van _Van = Get(uid);
-
-            __DbContext.Remove(_Van);
             __DbContext.SaveChanges();
         }
     }
