@@ -1,4 +1,5 @@
 using DeliverySoftware.Business.Delivery;
+using DeliverySoftware.Business.Fleet;
 using DeliverySoftware.Business.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,12 +12,14 @@ namespace DeliverySoftware.Pages.Customer
         private readonly IUserController __UserController;
         private readonly IPackageController __PackageController;
         private readonly IDeliveryController __DeliveryController;
+        private readonly IVanController __VanController;
 
         public OrderTrackingModel ()
         {
             __UserController = new UserController();
             __PackageController = new PackageController();
             __DeliveryController = new DeliveryController();
+            __VanController = new VanController();
         }
 
         public IActionResult OnGet()
@@ -27,17 +30,26 @@ namespace DeliverySoftware.Pages.Customer
                 Customer = __UserController.Get(Package.CustomerUID);
                 DeliveryRun = __DeliveryController.Get(Package.DeliveryUID);
 
-                Package _CurrentDelivery = __PackageController
-                    .GetByDeliveryAndDropNumber(DeliveryRun.UID, DeliveryRun.CurrentDrop);
+                
+                
+                if(DeliveryRun.CurrentDrop == 1)
+                {
+                    Van _DeliveryVan = __VanController.Get(DeliveryRun.VanUID);
 
-                DeliveryUser _CurrentStopCustomer = __UserController.Get(_CurrentDelivery.CustomerUID);
-                DriverHouseNumber = _CurrentStopCustomer.HouseNumber.Value;
-                DriverPostCode = _CurrentStopCustomer.PostCode;
+                    DriverPostCode = _DeliveryVan.DepotPostCode;
+                }
+                else
+                {
+                    Package _CurrentDelivery = __PackageController
+                    .GetByDeliveryAndDropNumber(DeliveryRun.UID, DeliveryRun.CurrentDrop - 1);
+
+                    DeliveryUser _PreviousStopCustomer = __UserController.Get(_CurrentDelivery.CustomerUID);
+
+                    DriverHouseNumber = _PreviousStopCustomer.HouseNumber.Value;
+                    DriverPostCode = _PreviousStopCustomer.PostCode;
+                }
+
                 IsOutForDelivery = DeliveryRun.Status == DeliveryStatus.Started;
-            }
-            else
-            {
-                //INVALID TRACKING CODE ERROR
             }
 
             return Page();
